@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { slugToPage } from "../content";
 import { DetailPage, HomePage, titleFor } from "../site";
 
+export const dynamicParams = false;
+
 export function generateStaticParams() { return Object.keys(slugToPage).map((slug) => ({ slug: slug.split("/") })); }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string[] }> }): Promise<Metadata> {
