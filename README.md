@@ -24,7 +24,7 @@ Prototype bilingue du futur site public du Saucisson neuchâtelois IGP et de l�
 | `/professionnels` | `/de/fachhandel` | Commerce, gastronomie, presse |
 | `/anmb` | `/de/anmb` | Association professionnelle |
 
-## Développement
+## Développement et publication GitHub Pages
 
 Prérequis : Node.js 22.13 ou plus récent.
 
@@ -39,6 +39,10 @@ Contrôles avant publication :
 npm run lint
 npm test
 ```
+
+Chaque envoi sur la branche `main` déclenche le workflow `.github/workflows/deploy-pages.yml`. Une fois GitHub Pages activé avec la source **GitHub Actions**, le site est publié à l’adresse :
+
+`https://amontandon01-cmyk.github.io/saucisson-neuchatelois-igp/`
 
 ## Mise à jour des contenus
 
