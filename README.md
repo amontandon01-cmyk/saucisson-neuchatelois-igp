@@ -71,6 +71,6 @@ Les photographies du produit et du territoire proviennent de la galerie de l’A
 ## Identité officielle
 
 - `public/logo-igp-officiel.png` : couleurs du logo IGP officiel et masque de transparence dérivé de la version vectorielle fournie sur la [page Corporate Design de l’Association suisse des AOP-IGP](https://www.aop-igp.ch/fr/a-notre-sujet/communication-et-rp/corporate-design). Le blanc des lettres et de la croix suisse est conservé ; seul le pourtour est transparent.
-- `public/logo-anmb-boucherie.png` et `public/logo-anmb-signature.png` : versions PNG transparentes des fichiers utilisés par le [site officiel de l’ANMB](https://www.boucheries-neuchatel.ch/), pour assurer un affichage fiable sur GitHub Pages.
+- `public/logo-anmb-boucherie.png` et `public/logo-anmb-signature.png` : versions PNG des fichiers utilisés par le [site officiel de l’ANMB](https://www.boucheries-neuchatel.ch/), pour assurer un affichage fiable sur GitHub Pages. Le logo circulaire reste intact et repose sur un disque vert foncé cerclé d’or afin que son lettrage blanc demeure lisible sur tous les fonds.
 
 Ces fichiers sont conservés sans redessin. Leur utilisation publique définitive reste soumise aux droits et validations des organisations concernées.
