@@ -21,3 +21,17 @@ test("uses the configured GitHub Pages base path", async () => {
     assert.match(html, new RegExp(`${basePath.replaceAll("/", "\\/")}\\/torree-hero\\.webp`));
   }
 });
+
+test("exports the complete producer directory and live map links", async () => {
+  const html = await readFile("out/ou-acheter/index.html", "utf8");
+  assert.match(html, /Neuf maisons productrices/);
+  assert.match(html, /Boucherie Schneiter/);
+  assert.match(html, /Christen Delicatessen/);
+  assert.match(html, /google\.com\/maps\/search/);
+  assert.match(html, /application\/ld\+json/);
+});
+
+test("exports official AOP-IGP photography", async () => {
+  const html = await readFile("out/le-produit/index.html", "utf8");
+  assert.match(html, /aop-saucisson-planche\.webp/);
+});

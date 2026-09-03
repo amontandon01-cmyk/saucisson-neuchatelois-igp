@@ -47,9 +47,10 @@ Chaque envoi sur la branche `main` déclenche le workflow `.github/workflows/dep
 ## Mise à jour des contenus
 
 - Les textes et routes se trouvent dans `app/content.ts`.
+- Les producteurs et points de vente se trouvent dans `app/locations.ts`.
 - La structure des pages se trouve dans `app/site.tsx`.
 - L’identité visuelle et l’affichage mobile se trouvent dans `app/globals.css`.
-- Le visuel principal se trouve dans `public/torree-hero.webp`.
+- Les ressources visuelles se trouvent dans `public/`.
 
 Avant la publication publique, l’ANMB doit valider la liste des producteurs et revendeurs, les coordonnées de contact, les traductions allemandes et tout visuel photographique officiel.
 
@@ -58,8 +59,12 @@ Avant la publication publique, l’ANMB doit valider la liste des producteurs et
 - [Patrimoine culinaire suisse](https://www.patrimoineculinaire.ch/Produit/Saucisson-neuchatelois-IGP-saucisse-neuchateloise-IGP/29)
 - [AOP-IGP Suisse](https://www.aop-igp.ch/fr/au-sujet-des-aop-igp/index.php?id=303&L=2)
 - [Cahier des charges du Saucisson neuchâtelois IGP](https://www.aop-igp.ch/fileadmin/Dokumente/kampagne2025/Pflichtenhefte/SNE/Pflichtenheft%20FR%20Saucisson%20neuchatelois%20IGP.pdf)
+- [Galerie officielle du Saucisson neuchâtelois IGP](https://www.aop-igp.ch/fr/saucisson-neuchatelois-igp/images-saucisson-neuchatelois-igp)
+- [Première Sélection du Saucisson neuchâtelois IGP 2026](https://cnci.ch/premiere-selection-du-saucisson-neuchatelois-igp)
 
 Le visuel de torrée est une création originale destinée au prototype ; il ne reprend pas la photographie de presse de *24 heures*.
+
+Les photographies du produit et du territoire proviennent de la galerie de l’Association suisse des AOP-IGP. Les fichiers HD et le droit de republication doivent être confirmés avant le lancement officiel. La carte utilise les données © contributeurs OpenStreetMap sous licence ODbL. Les boutons Google reposent sur les URL universelles Google Maps sans clé API.
 
 ## Identité officielle
 

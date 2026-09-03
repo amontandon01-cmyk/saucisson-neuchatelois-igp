@@ -1,0 +1,241 @@
+export type RegionKey = "mountains" | "littoral" | "val-de-ruz";
+
+export type SaleLocation = {
+  id: string;
+  producerId: string;
+  producer: string;
+  location: string;
+  address: string;
+  postalCode: string;
+  city: string;
+  region: RegionKey;
+  phone: string;
+  website?: string;
+  sourceUrl: string;
+  latitude: number;
+  longitude: number;
+  award?: "winner-2026";
+};
+
+export const locations: SaleLocation[] = [
+  {
+    id: "montandon-village",
+    producerId: "montandon",
+    producer: "Boucherie-Charcuterie Montandon SA",
+    location: "Magasin au Village",
+    address: "Grande-Rue 13",
+    postalCode: "2316",
+    city: "Les Ponts-de-Martel",
+    region: "mountains",
+    phone: "+41 32 934 30 10",
+    website: "https://www.montandon.ch/",
+    sourceUrl: "https://www.boucheries-neuchatel.ch/Membre/Montandon-SA",
+    latitude: 46.9994813,
+    longitude: 6.7324784,
+  },
+  {
+    id: "montandon-shop",
+    producerId: "montandon",
+    producer: "Boucherie-Charcuterie Montandon SA",
+    location: "Au Shop",
+    address: "En-bas-les-Barres 10",
+    postalCode: "2316",
+    city: "Les Ponts-de-Martel",
+    region: "mountains",
+    phone: "+41 32 934 30 10",
+    website: "https://www.montandon.ch/",
+    sourceUrl: "https://www.boucheries-neuchatel.ch/Membre/Montandon-Au-Shop",
+    latitude: 46.9974951,
+    longitude: 6.7393362,
+  },
+  {
+    id: "leger-saint-blaise",
+    producerId: "leger",
+    producer: "Boucherie Léger",
+    location: "Saint-Blaise",
+    address: "Rue de la Châtellenie 16",
+    postalCode: "2072",
+    city: "Saint-Blaise",
+    region: "littoral",
+    phone: "+41 32 753 21 52",
+    sourceUrl: "https://www.boucheries-neuchatel.ch/Membre/Boucherie-Leger",
+    latitude: 47.0148591,
+    longitude: 6.9902437,
+  },
+  {
+    id: "schwartz-geneveys",
+    producerId: "schwartz",
+    producer: "Boucherie Schwartz",
+    location: "Les Geneveys-sur-Coffrane",
+    address: "Rue Charles-L’Eplattenier 4",
+    postalCode: "2206",
+    city: "Les Geneveys-sur-Coffrane",
+    region: "val-de-ruz",
+    phone: "+41 32 857 11 05",
+    website: "https://www.boucherie-schwartz.ch/",
+    sourceUrl: "https://www.boucheries-neuchatel.ch/Membre/Boucherie-Schwartz",
+    latitude: 47.0167472,
+    longitude: 6.8529465,
+  },
+  {
+    id: "prairie-marche",
+    producerId: "prairie",
+    producer: "Boucherie-Charcuterie de la Prairie",
+    location: "Place du Marché",
+    address: "Place du Marché 12",
+    postalCode: "2300",
+    city: "La Chaux-de-Fonds",
+    region: "mountains",
+    phone: "+41 32 937 20 21",
+    website: "https://www.boucheriedelaprairie.ch/",
+    sourceUrl: "https://www.boucheries-neuchatel.ch/Membre/Boucherie-Charcuterie-de-la-Prairie-2",
+    latitude: 47.1037058,
+    longitude: 6.8303292,
+  },
+  {
+    id: "prairie-eplatures",
+    producerId: "prairie",
+    producer: "Boucherie-Charcuterie de la Prairie",
+    location: "Eplatures Centre",
+    address: "Boulevard des Eplatures 20",
+    postalCode: "2300",
+    city: "La Chaux-de-Fonds",
+    region: "mountains",
+    phone: "+41 32 937 20 21",
+    website: "https://www.boucheriedelaprairie.ch/",
+    sourceUrl: "https://www.boucheries-neuchatel.ch/Membre/Boucherie-Charcuterie-de-la-Prairie-Centre-commercial",
+    latitude: 47.0884485,
+    longitude: 6.8026968,
+  },
+  {
+    id: "fontaine-peseux",
+    producerId: "fontaine",
+    producer: "Boucherie-Traiteur de la Fontaine",
+    location: "Peseux",
+    address: "Rue de la Chapelle 9",
+    postalCode: "2034",
+    city: "Peseux",
+    region: "littoral",
+    phone: "+41 32 731 77 22",
+    website: "https://www.boucheriedelafontaine.ch/",
+    sourceUrl: "https://www.boucheries-neuchatel.ch/Membre/Boucherie-Traiteur-de-la-Fontaine-SNC",
+    latitude: 46.9872167,
+    longitude: 6.8900206,
+  },
+  {
+    id: "margot-neuchatel",
+    producerId: "margot",
+    producer: "Boucherie Margot SA",
+    location: "Neuchâtel",
+    address: "Rue des Moulins 6",
+    postalCode: "2000",
+    city: "Neuchâtel",
+    region: "littoral",
+    phone: "+41 32 725 66 20",
+    sourceUrl: "https://www.boucheries-neuchatel.ch/Membre/Boucherie-Margot",
+    latitude: 46.9919165,
+    longitude: 6.9285312,
+  },
+  {
+    id: "graf-cornaux",
+    producerId: "graf",
+    producer: "Boucherie Graf",
+    location: "Cornaux",
+    address: "Clos-Saint-Pierre 9",
+    postalCode: "2087",
+    city: "Cornaux",
+    region: "littoral",
+    phone: "+41 32 757 27 20",
+    website: "https://www.boucherie-graf.ch/",
+    sourceUrl: "https://www.boucherie-graf.ch/",
+    latitude: 47.0392846,
+    longitude: 7.0203807,
+  },
+  {
+    id: "schneiter-chaux",
+    producerId: "schneiter",
+    producer: "Boucherie Schneiter Sàrl",
+    location: "Marché Hall’titude",
+    address: "Rue de la Serre 19–21",
+    postalCode: "2300",
+    city: "La Chaux-de-Fonds",
+    region: "mountains",
+    phone: "+41 32 968 44 56",
+    website: "https://www.halltitude.market/",
+    sourceUrl: "https://www.suisseterroir.ch/adresse/boucherie-schneiter/2827/FR",
+    latitude: 47.1031485,
+    longitude: 6.8287958,
+  },
+  {
+    id: "schneiter-cernier",
+    producerId: "schneiter",
+    producer: "Boucherie Schneiter Sàrl",
+    location: "Cernier · Evologia",
+    address: "Rue des Planches Sèches 2",
+    postalCode: "2053",
+    city: "Cernier",
+    region: "val-de-ruz",
+    phone: "+41 32 968 44 56",
+    sourceUrl: "https://www.rtn.ch/rtn/Actualite/Region/20260317-La-boucherie-Schneiter-voit-triple-et-s-installe-a-Cernier-et-au-Locle.html",
+    latitude: 47.0585939,
+    longitude: 6.906123,
+  },
+  {
+    id: "schneiter-locle",
+    producerId: "schneiter",
+    producer: "Boucherie Schneiter Sàrl",
+    location: "Le Locle",
+    address: "Rue du Pont 4",
+    postalCode: "2400",
+    city: "Le Locle",
+    region: "mountains",
+    phone: "+41 32 968 44 56",
+    sourceUrl: "https://www.rtn.ch/rtn/Actualite/Region/20260317-La-boucherie-Schneiter-voit-triple-et-s-installe-a-Cernier-et-au-Locle.html",
+    latitude: 47.0573199,
+    longitude: 6.7489938,
+  },
+  {
+    id: "christen-chaux",
+    producerId: "christen",
+    producer: "Christen Delicatessen",
+    location: "Place du Marché",
+    address: "Rue Neuve 2",
+    postalCode: "2300",
+    city: "La Chaux-de-Fonds",
+    region: "mountains",
+    phone: "+41 32 968 35 40",
+    website: "https://christen-delicatessen.ch/",
+    sourceUrl: "https://christen-delicatessen.ch/contact/",
+    latitude: 47.1040054,
+    longitude: 6.8317492,
+    award: "winner-2026",
+  },
+  {
+    id: "christen-cortaillod",
+    producerId: "christen",
+    producer: "Christen Delicatessen",
+    location: "Cortaillod",
+    address: "Chemin de Ronzi 2",
+    postalCode: "2016",
+    city: "Cortaillod",
+    region: "littoral",
+    phone: "+41 32 841 09 59",
+    website: "https://christen-delicatessen.ch/",
+    sourceUrl: "https://christen-delicatessen.ch/contact/",
+    latitude: 46.9443328,
+    longitude: 6.8431016,
+    award: "winner-2026",
+  },
+];
+
+export const producerCount = new Set(locations.map((item) => item.producerId)).size;
+
+export function googlePlaceUrl(item: SaleLocation) {
+  const query = `${item.producer}, ${item.location}, ${item.address}, ${item.postalCode} ${item.city}, Suisse`;
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+}
+
+export function googleDirectionsUrl(item: SaleLocation) {
+  const destination = `${item.producer}, ${item.address}, ${item.postalCode} ${item.city}, Suisse`;
+  return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}`;
+}
