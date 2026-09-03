@@ -1,5 +1,5 @@
 export type Lang = "fr" | "de";
-export type PageKey = "product" | "cooking" | "recipes" | "torree" | "locator" | "pro" | "association";
+export type PageKey = "product" | "cooking" | "recipes" | "torree" | "locator" | "pro" | "association" | "committee" | "partners";
 
 export type DetailContent = {
   eyebrow: string;
@@ -11,8 +11,8 @@ export type DetailContent = {
 };
 
 export const routes: Record<Lang, Record<"home" | PageKey, string>> = {
-  fr: { home: "/", product: "/le-produit", cooking: "/cuisson", recipes: "/recettes", torree: "/torree", locator: "/ou-acheter", pro: "/professionnels", association: "/anmb" },
-  de: { home: "/de", product: "/de/das-produkt", cooking: "/de/zubereitung", recipes: "/de/rezepte", torree: "/de/torree", locator: "/de/verkaufsstellen", pro: "/de/fachhandel", association: "/de/anmb" },
+  fr: { home: "/", product: "/le-produit", cooking: "/cuisson", recipes: "/recettes", torree: "/torree", locator: "/ou-acheter", pro: "/professionnels", association: "/anmb", committee: "/anmb/comite", partners: "/anmb/reseau" },
+  de: { home: "/de", product: "/de/das-produkt", cooking: "/de/zubereitung", recipes: "/de/rezepte", torree: "/de/torree", locator: "/de/verkaufsstellen", pro: "/de/fachhandel", association: "/de/anmb", committee: "/de/anmb/vorstand", partners: "/de/anmb/netzwerk" },
 };
 
 export const slugToPage: Record<string, { lang: Lang; key: "home" | PageKey }> = {
@@ -24,6 +24,8 @@ export const slugToPage: Record<string, { lang: Lang; key: "home" | PageKey }> =
   "ou-acheter": { lang: "fr", key: "locator" },
   professionnels: { lang: "fr", key: "pro" },
   anmb: { lang: "fr", key: "association" },
+  "anmb/comite": { lang: "fr", key: "committee" },
+  "anmb/reseau": { lang: "fr", key: "partners" },
   "de/das-produkt": { lang: "de", key: "product" },
   "de/zubereitung": { lang: "de", key: "cooking" },
   "de/rezepte": { lang: "de", key: "recipes" },
@@ -31,6 +33,8 @@ export const slugToPage: Record<string, { lang: Lang; key: "home" | PageKey }> =
   "de/verkaufsstellen": { lang: "de", key: "locator" },
   "de/fachhandel": { lang: "de", key: "pro" },
   "de/anmb": { lang: "de", key: "association" },
+  "de/anmb/vorstand": { lang: "de", key: "committee" },
+  "de/anmb/netzwerk": { lang: "de", key: "partners" },
 };
 
 export const ui = {
@@ -102,11 +106,7 @@ const fr: Record<PageKey, DetailContent> = {
   locator: {
     eyebrow: "Où acheter", title: "Le Saucisson neuchâtelois IGP près de chez vous.", intro: "Neuf maisons productrices et quatorze adresses publiques réunies sur une carte interactive, avec un accès direct à la fiche Google et à l’itinéraire.",
     facts: [{ value: "9", label: "producteurs IGP" }, { value: "14", label: "adresses publiques" }, { value: "3", label: "régions à filtrer" }, { value: "03.09.2026", label: "mise à jour" }],
-    sections: [
-      { kicker: "Montagnes neuchâteloises", title: "La Chaux-de-Fonds · Le Locle", text: "Les artisans et commerces participants apparaîtront ici après validation de la liste officielle." },
-      { kicker: "Littoral & Val-de-Ruz", title: "Neuchâtel · Boudry · Cernier", text: "La recherche distinguera les producteurs IGP des points de vente afin d’éviter toute confusion." },
-      { kicker: "Val-de-Travers & hors canton", title: "Trouver l’IGP plus loin.", text: "Une deuxième phase pourra référencer des distributeurs partenaires en Suisse romande et alémanique, sans diluer l’origine neuchâteloise." },
-    ], note: "Cette liste de travail, recoupée avec les sources publiques disponibles, doit être validée par l’ANMB ou l’organisme de certification avant le lancement officiel.",
+    sections: [],
   },
   pro: {
     eyebrow: "Professionnels", title: "Un produit régional prêt à voyager.", intro: "Le commerce, la gastronomie et les médias ont besoin d’informations rapides, de visuels fiables et d’un contact clair — en français comme en allemand.",
@@ -119,12 +119,22 @@ const fr: Record<PageKey, DetailContent> = {
   },
   association: {
     eyebrow: "Association", title: "L’ANMB porte la voix du métier.", intro: "L’Association neuchâteloise des maîtres bouchers réunit, représente et soutient les professionnels du canton.",
-    facts: [{ value: "ANMB", label: "interprofession" }, { value: "NE", label: "ancrage cantonal" }, { value: "IGP", label: "patrimoine défendu" }, { value: "Pro", label: "réseau métier" }],
+    facts: [{ value: "ANMB", label: "association professionnelle" }, { value: "NE", label: "ancrage cantonal" }, { value: "IGP", label: "patrimoine défendu" }, { value: "Pro", label: "réseau métier" }],
     sections: [
       { kicker: "Mission", title: "Représenter, transmettre, promouvoir.", text: "L’espace institutionnel reste distinct du parcours consommateur, tout en partageant le même outil de publication." },
       { kicker: "Membres", title: "Un annuaire professionnel à jour.", text: "Les informations de l’association, ses membres et ses actualités vivent dans un espace dédié sans concurrencer la mise en avant du produit IGP." },
       { kicker: "Gouvernance", title: "Une validation éditoriale simple.", text: "Le webmaster prépare les contenus ; un référent ANMB valide les données sensibles avant publication." },
     ],
+  },
+  committee: {
+    eyebrow: "Association · Gouvernance", title: "Le comité de l’ANMB.", intro: "Les professionnels qui représentent l’association et portent les dossiers de la branche dans le canton de Neuchâtel.",
+    facts: [{ value: "7", label: "membres publiés" }, { value: "1", label: "président" }, { value: "NE", label: "représentation cantonale" }, { value: "2026", label: "vérification requise" }],
+    sections: [], note: "Composition reprise du site ANMB consulté le 3 septembre 2026. Les fonctions et mandats doivent être confirmés avant le lancement officiel.",
+  },
+  partners: {
+    eyebrow: "Association · Réseau", title: "Partenaires et organismes de référence.", intro: "Les partenaires professionnels de l’ANMB sont présentés séparément des institutions qui protègent, certifient, documentent ou font rayonner le produit.",
+    facts: [{ value: "3", label: "partenaires ANMB publiés" }, { value: "3", label: "organismes IGP" }, { value: "3", label: "références terroir" }, { value: "3", label: "relais de rayonnement" }],
+    sections: [],
   },
 };
 
@@ -134,9 +144,11 @@ const de: Record<PageKey, DetailContent> = {
   cooking: { eyebrow: "Anleitung", title: "Sanft garen, grosszügig geniessen.", intro: "Starkes Kochen vermeiden: Wasser um 80 °C schont Darm, Saftigkeit und Textur.", facts: [{ value: "80 °C", label: "siedendes Wasser" }, { value: "30–40 Min.", label: "je nach Kaliber" }, { value: "0", label: "Löcher im Darm" }, { value: "5 Min.", label: "empfohlene Ruhe" }], sections: [{ kicker: "01 · Vorbereiten", title: "Saucisson nicht einstechen.", text: "In einen Topf legen und gut mit kaltem Wasser bedecken. Der intakte Darm hält die Aromen im Produkt." }, { kicker: "02 · Erwärmen", title: "Langsam bis knapp unter den Siedepunkt.", text: "Das Wasser ungefähr bei 80 °C halten. Je nach Gewicht und Herstellerangabe 30 bis 40 Minuten garen." }, { kicker: "03 · Servieren", title: "Ruhen lassen und dick aufschneiden.", text: "Kartoffeln, Lauch, Linsen oder ein säuerlicher Salat balancieren den Rauchgeschmack." }], note: "Die Zubereitungshinweise des Herstellers auf der Etikette haben Vorrang." },
   recipes: { eyebrow: "Rezepte", title: "Rauch macht Appetit.", intro: "Drei Einstiege vom Familienteller bis zum modernen Apéro — immer mit dem Produkt im Mittelpunkt.", facts: [{ value: "4", label: "Personen" }, { value: "3", label: "Küchenideen" }, { value: "1", label: "Hauptdarsteller" }, { value: "100 %", label: "gesellig" }], sections: [{ kicker: "Klassisch", title: "Kartoffeln, Lauch und Senf.", text: "Sanft garen und mit Dampfkartoffeln, geschmortem Lauch und Körnersenf-Vinaigrette servieren.", bullets: ["Einfache Zubereitung", "Dazu: Chasselas oder trockener Apfelsaft", "Ideal für Herbst und Winter"] }, { kicker: "Aus dem Topf", title: "Linsen, Karotten und Kräuter.", text: "Linsen mit Karotte, Zwiebel und Lorbeer köcheln. Den geschnittenen Saucisson erst am Schluss dazugeben." }, { kicker: "Zum Apéro", title: "Warme Scheiben, Pickles und Roggenbrot.", text: "Auf geröstetem Brot mit Gemüsepickles und mildem Senf servieren." }] },
   torree: { eyebrow: "Neuenburger Tradition", title: "Die Torrée erzählt sich an der Glut.", intro: "Mehr als ein Rezept: eine Begegnung mit Wald, Jahreszeit und Gemeinschaft.", facts: [{ value: "Jura", label: "Wald und Weiden" }, { value: "Glut", label: "Mittelpunkt" }, { value: "Familien", label: "überliefertes Können" }, { value: "Sorgfalt", label: "immer zuerst" }], sections: [{ kicker: "Der Handgriff", title: "Vom Feuer zur langsamen Hitze.", text: "Die Torrée beginnt mit einem kontrollierten Feuer und gart später in der Glut. Methoden unterscheiden sich von Familie zu Familie." }, { kicker: "Der Moment", title: "Zusammenkommen, bevor gegessen wird.", text: "Vorbereiten, warten, erzählen: Der Saucisson verbindet Geselligkeit und Landschaft." }, { kicker: "Verantwortung", title: "Vor jedem Feuer Einschränkungen prüfen.", text: "Bei Trockenheit können Feuer beschränkt oder verboten sein. Kantonale Hinweise beachten und Glut vollständig löschen.", bullets: ["Waldbrandgefahr am selben Tag prüfen", "Wasser bereithalten", "Nichts zurücklassen"] }], note: "Diese Kulturseite ersetzt niemals offizielle Brandschutzanweisungen." },
-  locator: { eyebrow: "Verkaufsstellen", title: "Neuenburger Saucisson IGP in Ihrer Nähe.", intro: "Neun produzierende Betriebe und vierzehn öffentliche Adressen auf einer interaktiven Karte – mit direktem Zugang zum Google-Eintrag und zur Route.", facts: [{ value: "9", label: "IGP-Produzenten" }, { value: "14", label: "öffentliche Adressen" }, { value: "3", label: "Regionen" }, { value: "03.09.2026", label: "aktualisiert" }], sections: [{ kicker: "Neuenburger Berge", title: "La Chaux-de-Fonds · Le Locle", text: "Teilnehmende Adressen erscheinen nach Freigabe der offiziellen Liste." }, { kicker: "Seeufer & Val-de-Ruz", title: "Neuchâtel · Boudry · Cernier", text: "Die Suche trennt IGP-Produzenten von Verkaufsstellen." }, { kicker: "Val-de-Travers & ausserkantonal", title: "Die IGP weiter weg finden.", text: "Partner in der Romandie und Deutschschweiz können später ergänzt werden." }], note: "Diese mit öffentlichen Quellen abgeglichene Arbeitsliste muss vor dem offiziellen Start von der ANMB oder der Zertifizierungsstelle bestätigt werden." },
+  locator: { eyebrow: "Verkaufsstellen", title: "Neuenburger Saucisson IGP in Ihrer Nähe.", intro: "Neun produzierende Betriebe und vierzehn öffentliche Adressen auf einer interaktiven Karte – mit direktem Zugang zum Google-Eintrag und zur Route.", facts: [{ value: "9", label: "IGP-Produzenten" }, { value: "14", label: "öffentliche Adressen" }, { value: "3", label: "Regionen" }, { value: "03.09.2026", label: "aktualisiert" }], sections: [] },
   pro: { eyebrow: "Für Fachleute", title: "Ein Regionalprodukt, das weiter reisen kann.", intro: "Handel, Gastronomie und Medien brauchen schnelle Informationen, verlässliche Bilder und einen klaren Kontakt.", facts: [{ value: "B2B", label: "eigener Kontakt" }, { value: "FR/DE", label: "Verkaufshilfen" }, { value: "IGP", label: "belegte Argumente" }, { value: "CH", label: "nationale Ambition" }], sections: [{ kicker: "Handel", title: "Eine Geschichte, die am Regal verkauft.", text: "Argumente, Garhinweise, Plakate, Rezepte und QR-Code räumen Kaufhürden aus dem Weg.", bullets: ["Zweisprachige Produktblätter", "POS- und Social-Media-Kit", "Zertifizierte Lieferanten"] }, { kicker: "Gastronomie", title: "Küchen inspirieren.", text: "Formate, Anwendungen und Menüideen öffnen Türen zu Restaurants und Events." }, { kicker: "Medien & Tourismus", title: "Mediathek mit klaren Rechten.", text: "Bilder, Geschichte, belegte Zahlen, Kontakte und Nutzungsbedingungen an einem Ort." }] },
   association: { eyebrow: "Verband", title: "Die ANMB gibt dem Handwerk eine Stimme.", intro: "Der Neuenburger Metzgermeisterverband vereint, vertritt und unterstützt die Berufsleute des Kantons.", facts: translateFacts([{ value: "ANMB", label: "Berufsverband" }, { value: "NE", label: "kantonal" }, { value: "IGP", label: "geschütztes Erbe" }, { value: "Pro", label: "Netzwerk" }]), sections: [{ kicker: "Aufgabe", title: "Vertreten, weitergeben, fördern.", text: "Der institutionelle Bereich bleibt vom Konsumentenweg getrennt und nutzt dieselbe technische Plattform." }, { kicker: "Mitglieder", title: "Ein aktuelles Berufsverzeichnis.", text: "Verbandsinformationen und Meldungen leben in einem eigenen Bereich." }, { kicker: "Redaktion", title: "Eine einfache Freigabe.", text: "Der Webmaster bereitet Inhalte vor; die ANMB prüft sensible Daten vor der Veröffentlichung." }] },
+  committee: { eyebrow: "Verband · Führung", title: "Der Vorstand der ANMB.", intro: "Die Berufsleute, die den Verband vertreten und die Branchenthemen im Kanton Neuenburg tragen.", facts: [{ value: "7", label: "veröffentlichte Mitglieder" }, { value: "1", label: "Präsident" }, { value: "NE", label: "kantonale Vertretung" }, { value: "2026", label: "Bestätigung nötig" }], sections: [], note: "Zusammensetzung gemäss der am 3. September 2026 eingesehenen ANMB-Website. Funktionen und Mandate sind vor dem offiziellen Start zu bestätigen." },
+  partners: { eyebrow: "Verband · Netzwerk", title: "Partner und Referenzorganisationen.", intro: "Die Berufspartner der ANMB werden klar von den Institutionen getrennt, die das Produkt schützen, zertifizieren, dokumentieren oder bekannt machen.", facts: [{ value: "3", label: "veröffentlichte ANMB-Partner" }, { value: "3", label: "IGP-Institutionen" }, { value: "3", label: "Kulinarik-Referenzen" }, { value: "3", label: "Reichweitenpartner" }], sections: [] },
 };
 
 export const pages: Record<Lang, Record<PageKey, DetailContent>> = { fr, de };

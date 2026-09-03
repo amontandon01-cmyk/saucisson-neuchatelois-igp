@@ -35,3 +35,34 @@ test("exports official AOP-IGP photography", async () => {
   const html = await readFile("out/le-produit/index.html", "utf8");
   assert.match(html, /aop-saucisson-planche\.webp/);
 });
+
+test("exports a distinct ANMB area and committee", async () => {
+  await Promise.all([
+    access("out/anmb/index.html"),
+    access("out/anmb/comite/index.html"),
+    access("out/anmb/reseau/index.html"),
+    access("out/de/anmb/vorstand/index.html"),
+    access("out/de/anmb/netzwerk/index.html"),
+  ]);
+  const html = await readFile("out/anmb/comite/index.html", "utf8");
+  assert.match(html, /Alexandre Léger/);
+  assert.match(html, /Pierre Montandon/);
+  assert.match(html, /Membre du comité/);
+});
+
+test("exports classified and clickable reference organisations", async () => {
+  const html = await readFile("out/anmb/reseau/index.html", "utf8");
+  assert.match(html, /Partenaires professionnels de l’ANMB/);
+  assert.match(html, /Proviande/);
+  assert.match(html, /Suisse Terroir/);
+  assert.match(html, /Suisse Tourisme/);
+  assert.match(html, /https:\/\/www\.aop-igp\.ch\/fr\/saucisson-neuchatelois-igp/);
+  assert.match(html, /https:\/\/www\.myswitzerland\.com\/fr-ch\/destinations\/neuchatel\//);
+  assert.match(html, /ne signifie pas automatiquement/);
+});
+
+test("removes the obsolete schematic map from the homepage", async () => {
+  const html = await readFile("out/index.html", "utf8");
+  assert.doesNotMatch(html, /abstract-map|map-card/);
+  assert.match(html, /Ouvrir la carte à jour/);
+});

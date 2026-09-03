@@ -1,6 +1,6 @@
 # Saucisson neuchâtelois IGP
 
-Prototype bilingue du futur site public du Saucisson neuchâtelois IGP et de l’ANMB.
+Site bilingue du Saucisson neuchâtelois IGP et de l’ANMB.
 
 ## Objectifs
 
@@ -23,6 +23,8 @@ Prototype bilingue du futur site public du Saucisson neuchâtelois IGP et de l�
 | `/ou-acheter` | `/de/verkaufsstellen` | Annuaire validé |
 | `/professionnels` | `/de/fachhandel` | Commerce, gastronomie, presse |
 | `/anmb` | `/de/anmb` | Association professionnelle |
+| `/anmb/comite` | `/de/anmb/vorstand` | Comité et gouvernance |
+| `/anmb/reseau` | `/de/anmb/netzwerk` | Partenaires et organismes de référence |
 
 ## Développement et publication GitHub Pages
 
@@ -62,7 +64,7 @@ Avant la publication publique, l’ANMB doit valider la liste des producteurs et
 - [Galerie officielle du Saucisson neuchâtelois IGP](https://www.aop-igp.ch/fr/saucisson-neuchatelois-igp/images-saucisson-neuchatelois-igp)
 - [Première Sélection du Saucisson neuchâtelois IGP 2026](https://cnci.ch/premiere-selection-du-saucisson-neuchatelois-igp)
 
-Le visuel de torrée est une création originale destinée au prototype ; il ne reprend pas la photographie de presse de *24 heures*.
+Le visuel de torrée est une création originale ; il ne reprend pas la photographie de presse de *24 heures*.
 
 Les photographies du produit et du territoire proviennent de la galerie de l’Association suisse des AOP-IGP. Les fichiers HD et le droit de republication doivent être confirmés avant le lancement officiel. La carte utilise les données © contributeurs OpenStreetMap sous licence ODbL. Les boutons Google reposent sur les URL universelles Google Maps sans clé API.
 
