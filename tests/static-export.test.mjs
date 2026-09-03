@@ -36,6 +36,23 @@ test("exports official AOP-IGP photography", async () => {
   assert.match(html, /aop-saucisson-planche\.webp/);
 });
 
+test("uses transparent official marks and names both protected products", async () => {
+  const home = await readFile("out/index.html", "utf8");
+  const recipes = await readFile("out/recettes/index.html", "utf8");
+  assert.match(home, /logo-igp-officiel\.png/);
+  assert.match(home, /favicon\.png/);
+  assert.match(home, /Saucisson neuchâtelois IGP &amp; Saucisse neuchâteloise IGP/);
+  assert.match(recipes, /Saucisse neuchâteloise IGP/);
+  assert.match(recipes, /2<\/strong><span>produits IGP/);
+  assert.match(recipes, /logo-anmb-boucherie\.png/);
+});
+
+test("credits the real torrée atmosphere photograph", async () => {
+  const html = await readFile("out/torree/index.html", "utf8");
+  assert.match(html, /Rasmus \/ Unsplash/);
+  assert.doesNotMatch(html, /Illustration originale/);
+});
+
 test("exports a distinct ANMB area and committee", async () => {
   await Promise.all([
     access("out/anmb/index.html"),

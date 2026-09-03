@@ -64,13 +64,13 @@ Avant la publication publique, l’ANMB doit valider la liste des producteurs et
 - [Galerie officielle du Saucisson neuchâtelois IGP](https://www.aop-igp.ch/fr/saucisson-neuchatelois-igp/images-saucisson-neuchatelois-igp)
 - [Première Sélection du Saucisson neuchâtelois IGP 2026](https://cnci.ch/premiere-selection-du-saucisson-neuchatelois-igp)
 
-Le visuel de torrée est une création originale ; il ne reprend pas la photographie de presse de *24 heures*.
+Le visuel d’ambiance de la torrée est une photographie réelle de feu en forêt par [Rasmus sur Unsplash](https://unsplash.com/photos/campfire-burning-with-smoke-in-a-forest-setting-Z38mI0BC8g4), utilisée selon la [licence Unsplash](https://unsplash.com/license). Il ne présente pas une torrée documentaire et devra idéalement être remplacé par une photographie neuchâteloise dont l’ANMB possède les droits.
 
 Les photographies du produit et du territoire proviennent de la galerie de l’Association suisse des AOP-IGP. Les fichiers HD et le droit de republication doivent être confirmés avant le lancement officiel. La carte utilise les données © contributeurs OpenStreetMap sous licence ODbL. Les boutons Google reposent sur les URL universelles Google Maps sans clé API.
 
 ## Identité officielle
 
-- `public/logo-igp-officiel.jpg` : logo IGP officiel téléchargé depuis la [page Corporate Design de l’Association suisse des AOP-IGP](https://www.aop-igp.ch/fr/a-notre-sujet/communication-et-rp/corporate-design).
-- `public/logo-anmb-boucherie.svg` et `public/logo-anmb-signature.svg` : fichiers utilisés par le [site officiel de l’ANMB](https://www.boucheries-neuchatel.ch/).
+- `public/logo-igp-officiel.png` : couleurs du logo IGP officiel et masque de transparence dérivé de la version vectorielle fournie sur la [page Corporate Design de l’Association suisse des AOP-IGP](https://www.aop-igp.ch/fr/a-notre-sujet/communication-et-rp/corporate-design). Le blanc des lettres et de la croix suisse est conservé ; seul le pourtour est transparent.
+- `public/logo-anmb-boucherie.png` et `public/logo-anmb-signature.png` : versions PNG transparentes des fichiers utilisés par le [site officiel de l’ANMB](https://www.boucheries-neuchatel.ch/), pour assurer un affichage fiable sur GitHub Pages.
 
 Ces fichiers sont conservés sans redessin. Leur utilisation publique définitive reste soumise aux droits et validations des organisations concernées.

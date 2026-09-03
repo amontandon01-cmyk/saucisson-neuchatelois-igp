@@ -42,6 +42,15 @@ function normalize(value: string) {
   return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 }
 
+function GoogleMark() {
+  return <span className="google-mark" aria-hidden="true"><svg viewBox="0 0 18 18" role="img">
+    <path fill="#4285F4" d="M17.64 9.205c0-.638-.057-1.252-.164-1.841H9v3.481h4.844a4.14 4.14 0 0 1-1.797 2.716v2.258h2.909c1.702-1.567 2.684-3.878 2.684-6.614Z" />
+    <path fill="#34A853" d="M9 18c2.43 0 4.468-.806 5.956-2.18l-2.909-2.258c-.806.54-1.835.859-3.047.859-2.344 0-4.328-1.585-5.037-3.714H.956v2.332A9 9 0 0 0 9 18Z" />
+    <path fill="#FBBC05" d="M3.963 10.707A5.41 5.41 0 0 1 3.682 9c0-.592.102-1.168.281-1.707V4.961H.956A9 9 0 0 0 0 9c0 1.452.347 2.827.956 4.039l3.007-2.332Z" />
+    <path fill="#EA4335" d="M9 3.579c1.321 0 2.507.454 3.441 1.346l2.581-2.581C13.464.892 11.43 0 9 0A9 9 0 0 0 .956 4.961l3.007 2.332C4.672 5.164 6.656 3.579 9 3.579Z" />
+  </svg></span>;
+}
+
 function DirectoryMap({ items, lang }: { items: SaleLocation[]; lang: Lang }) {
   const mapElement = useRef<HTMLDivElement>(null);
 
@@ -207,7 +216,7 @@ export function LocatorPage({ lang }: { lang: Lang }) {
           <address><MapPin size={19} /><span>{item.address}<br />{item.postalCode} {item.city}</span></address>
           <a className="location-phone" href={`tel:${item.phone.replace(/\s/g, "")}`}><Phone size={18} />{item.phone}</a>
           <div className="location-actions">
-            <a href={googlePlaceUrl(item)} target="_blank" rel="noreferrer"><ExternalLink size={17} />{copy.maps}</a>
+            <a href={googlePlaceUrl(item)} target="_blank" rel="noreferrer"><GoogleMark />{copy.maps}</a>
             <a href={googleDirectionsUrl(item)} target="_blank" rel="noreferrer"><Navigation size={17} />{copy.directions}</a>
             {item.website && <a href={item.website} target="_blank" rel="noreferrer"><ExternalLink size={17} />{copy.website}</a>}
           </div>

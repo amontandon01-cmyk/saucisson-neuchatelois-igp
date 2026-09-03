@@ -5,18 +5,19 @@ import { alternateRoute, Lang, PageKey, pages, routes, ui } from "./content";
 import { LocatorPage } from "./locator-page";
 
 const assetPath = (path: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${path}`;
+const torreePhotoUrl = "https://unsplash.com/photos/campfire-burning-with-smoke-in-a-forest-setting-Z38mI0BC8g4";
 
 const detailVisuals: Record<Exclude<PageKey, "locator" | "committee" | "partners">, { src: string; alt: Record<Lang, string>; position?: string }> = {
   product: { src: "/aop-saucisson-planche.webp", alt: { fr: "Saucisson neuchâtelois IGP entier et tranché sur une planche", de: "Neuenburger Saucisson IGP, ganz und aufgeschnitten" } },
-  cooking: { src: "/aop-saucissons.webp", alt: { fr: "Saucissons neuchâtelois IGP prêts à être cuits", de: "Neuenburger Saucissons IGP, bereit zum Garen" }, position: "center 48%" },
+  cooking: { src: "/aop-saucissons.webp", alt: { fr: "Artisan présentant des Saucissons neuchâtelois IGP prêts à être cuits", de: "Handwerker mit Neuenburger Saucissons IGP, bereit zum Garen" }, position: "center 26%" },
   recipes: { src: "/aop-saucisson-creux.webp", alt: { fr: "Saucisson neuchâtelois IGP présenté avec le Creux du Van", de: "Neuenburger Saucisson IGP vor dem Creux du Van" } },
-  torree: { src: "/torree-hero.webp", alt: { fr: "Saucisson près des braises lors d’une torrée", de: "Saucisson an der Glut einer Torrée" } },
+  torree: { src: "/torree-hero.webp", alt: { fr: "Feu de bois et braises en forêt, évocation de la torrée", de: "Holzfeuer und Glut im Wald als Sinnbild der Torrée" } },
   pro: { src: "/aop-craft.webp", alt: { fr: "Artisan dans un fumoir de saucissons neuchâtelois", de: "Handwerker in einer Neuenburger Saucisson-Räucherkammer" }, position: "center 30%" },
   association: { src: "/aop-paysage.webp", alt: { fr: "Paysage rural du Jura neuchâtelois", de: "Ländliche Landschaft im Neuenburger Jura" } },
 };
 
 function Brand() {
-  return <span className="brand" aria-label="Saucisson neuchâtelois IGP"><Image className="brand-official-mark" src={assetPath("/logo-igp-officiel.jpg")} alt="" width={54} height={52} /><span className="brand-name">Saucisson<small>neuchâtelois · IGP</small></span></span>;
+  return <span className="brand" aria-label="Saucisson neuchâtelois IGP et Saucisse neuchâteloise IGP"><Image className="brand-official-mark" src={assetPath("/logo-igp-officiel.png")} alt="" width={54} height={52} /><span className="brand-name">Saucisson<small>neuchâtelois · IGP</small></span></span>;
 }
 
 const associationKeys: PageKey[] = ["association", "committee", "partners"];
@@ -75,7 +76,7 @@ function Header({ lang, current }: { lang: Lang; current: "home" | PageKey }) {
   const associationActive = current !== "home" && associationKeys.includes(current);
   return <>
     <a className="skip-link" href="#contenu">{lang === "fr" ? "Aller au contenu" : "Zum Inhalt"}</a>
-    <div className="origin-strip"><span>{t.claim}</span><span>IGP · AOP-IGP Suisse</span></div>
+    <div className="origin-strip"><span>{t.claim}</span><span>{lang === "fr" ? "Deux spécialités certifiées IGP" : "Zwei IGP-zertifizierte Spezialitäten"}</span></div>
     <header className="site-header">
       <Link href={routes[lang].home} className="brand-link"><Brand /></Link>
       <nav className="desktop-nav" aria-label={lang === "fr" ? "Navigation principale" : "Hauptnavigation"}>{t.nav.map(([key, label]) => <Link className={current === key ? "active" : ""} href={routes[lang][key]} key={key}>{label}</Link>)}</nav>
@@ -90,7 +91,7 @@ function AssociationSubnav({ lang, current }: { lang: Lang; current: PageKey }) 
     ? [["association", "L’association"], ["committee", "Comité"], ["partners", "Réseau & partenaires"]]
     : [["association", "Der Verband"], ["committee", "Vorstand"], ["partners", "Netzwerk & Partner"]];
   return <nav className="association-subnav" aria-label={lang === "fr" ? "Navigation de l’ANMB" : "Navigation des Verbands"}>
-    <Link className="association-subnav-brand" href={routes[lang].association}><Image src={assetPath("/logo-anmb-boucherie.svg")} alt="" width={44} height={44} /><span><strong>ANMB</strong><small>{lang === "fr" ? "Association professionnelle" : "Berufsverband"}</small></span></Link>
+    <Link className="association-subnav-brand" href={routes[lang].association}><Image src={assetPath("/logo-anmb-boucherie.png")} alt="" width={44} height={44} /><span><strong>ANMB</strong><small>{lang === "fr" ? "Association professionnelle" : "Berufsverband"}</small></span></Link>
     <div>{links.map(([key, label]) => <Link className={current === key ? "active" : ""} aria-current={current === key ? "page" : undefined} href={routes[lang][key]} key={key}>{label}</Link>)}</div>
   </nav>;
 }
@@ -106,11 +107,11 @@ function Facts({ items }: { items: { value: string; label: string }[] }) {
 function Footer({ lang }: { lang: Lang }) {
   const t = ui[lang];
   return <footer className="site-footer"><div className="footer-main">
-    <div className="footer-identity"><Brand /><p>{lang === "fr" ? "Une spécialité protégée, un canton à découvrir." : "Eine geschützte Spezialität, ein Kanton zum Entdecken."}</p><div className="anmb-lockup"><Image src={assetPath("/logo-anmb-boucherie.svg")} alt="Boucherie neuchâteloise" width={76} height={76} /><div><strong>ANMB</strong><span>{lang === "fr" ? "Association neuchâteloise des maîtres-bouchers" : "Neuenburger Metzgermeister-Verband"}</span><Image className="anmb-signature" src={assetPath("/logo-anmb-signature.svg")} alt="Ma chair et tendre" width={188} height={21} /></div></div></div>
+    <div className="footer-identity"><Brand /><p>{lang === "fr" ? "Deux spécialités protégées, un canton à découvrir." : "Zwei geschützte Spezialitäten, ein Kanton zum Entdecken."}</p><div className="anmb-lockup"><Image src={assetPath("/logo-anmb-boucherie.png")} alt="Boucherie neuchâteloise" width={76} height={76} /><div><strong>ANMB</strong><span>{lang === "fr" ? "Association neuchâteloise des maîtres-bouchers" : "Neuenburger Metzgermeister-Verband"}</span><Image className="anmb-signature" src={assetPath("/logo-anmb-signature.png")} alt="Ma chair et tendre" width={188} height={21} /></div></div></div>
     <div><h2>{lang === "fr" ? "Découvrir" : "Entdecken"}</h2><Link href={routes[lang].product}>{t.nav[0][1]}</Link><Link href={routes[lang].cooking}>{t.nav[1][1]}</Link><Link href={routes[lang].torree}>{t.nav[3][1]}</Link><Link href={routes[lang].locator}>{t.nav[4][1]}</Link><Link href={routes[lang].pro}>{t.pro}</Link></div>
     <div><h2>{lang === "fr" ? "Association" : "Verband"}</h2><Link href={routes[lang].association}>ANMB</Link><Link href={routes[lang].committee}>{lang === "fr" ? "Comité" : "Vorstand"}</Link><Link href={routes[lang].partners}>{lang === "fr" ? "Réseau & partenaires" : "Netzwerk & Partner"}</Link></div>
     <div><h2>{lang === "fr" ? "Références" : "Quellen"}</h2><a href="https://www.aop-igp.ch/fr/saucisson-neuchatelois-igp" target="_blank" rel="noreferrer">AOP-IGP Suisse</a><a href="https://www.suisseterroir.ch/suggestions/saucisson-neuchatelois-igp" target="_blank" rel="noreferrer">Suisse Terroir</a><a href="https://www.patrimoineculinaire.ch/Produit/Saucisson-neuchatelois-IGP-saucisse-neuchateloise-IGP/29" target="_blank" rel="noreferrer">Patrimoine culinaire suisse</a></div>
-  </div><div className="footer-bottom"><span>© 2026 · Saucisson neuchâtelois IGP · ANMB</span><span>{lang === "fr" ? "Logotypes officiels ANMB et AOP-IGP Suisse · Photographies : Association suisse des AOP-IGP." : "Offizielle Logos von ANMB und AOP-IGP Schweiz · Fotos: Schweizerische Vereinigung der AOP-IGP."}</span></div></footer>;
+  </div><div className="footer-bottom"><span>{lang === "fr" ? "© 2026 · Saucisson neuchâtelois IGP & Saucisse neuchâteloise IGP · ANMB" : "© 2026 · Neuenburger Saucisson IGP & Saucisse IGP · ANMB"}</span><span>{lang === "fr" ? "Logotypes officiels ANMB et AOP-IGP Suisse · Photographies produit : Association suisse des AOP-IGP." : "Offizielle Logos von ANMB und AOP-IGP Schweiz · Produktfotos: Schweizerische Vereinigung der AOP-IGP."}</span></div></footer>;
 }
 
 export function HomePage({ lang }: { lang: Lang }) {
@@ -129,8 +130,8 @@ export function HomePage({ lang }: { lang: Lang }) {
     <Header lang={lang} current="home" />
     <main id="contenu">
       <section className="hero">
-        <div className="hero-copy"><p className="eyebrow light">{t.heroEyebrow}</p><h1>{t.heroTitle}</h1><p className="hero-intro">{t.heroIntro}</p><div className="button-row"><ButtonLink href={routes[lang].locator}>{t.find}</ButtonLink><ButtonLink href={routes[lang].cooking} secondary>{t.cook}</ButtonLink></div><div className="hero-seal"><ShieldCheck size={22} /><span>{lang === "fr" ? "Indication géographique protégée" : "Geschützte geografische Angabe"}</span></div></div>
-        <figure className="hero-image"><Image src={assetPath("/torree-hero.webp")} alt={lang === "fr" ? "Saucisson fumé tranché près des braises lors d’une torrée" : "Geräucherter Saucisson neben der Glut einer Torrée"} fill priority sizes="(max-width: 900px) 100vw, 55vw" /><figcaption>{t.imageCaption}</figcaption></figure>
+        <div className="hero-copy"><p className="eyebrow light">{t.heroEyebrow}</p><h1>{t.heroTitle}</h1><p className="hero-intro">{t.heroIntro}</p><div className="button-row"><ButtonLink href={routes[lang].locator}>{t.find}</ButtonLink><ButtonLink href={routes[lang].cooking} secondary>{t.cook}</ButtonLink></div><div className="hero-seal"><ShieldCheck size={22} /><span>{lang === "fr" ? "Certification IGP · origine et savoir-faire contrôlés" : "IGP-Zertifizierung · kontrollierte Herkunft und Herstellung"}</span></div></div>
+        <figure className="hero-image"><Image src={assetPath("/torree-hero.webp")} alt={lang === "fr" ? "Feu de bois et braises en forêt, évocation de la torrée" : "Holzfeuer und Glut im Wald als Sinnbild der Torrée"} fill priority sizes="(max-width: 900px) 100vw, 55vw" /><figcaption>{t.imageCaption} <a href={torreePhotoUrl} target="_blank" rel="noreferrer">{lang === "fr" ? "Photo : Rasmus / Unsplash" : "Foto: Rasmus / Unsplash"}</a></figcaption></figure>
       </section>
       <Facts items={lang === "fr" ? [{ value: "2003", label: "IGP enregistrée" }, { value: "18–28 °C", label: "fumaison à froid" }, { value: "36 h", label: "procédé minimum" }, { value: "Neuchâtel", label: "lieu de fabrication" }] : [{ value: "2003", label: "IGP eingetragen" }, { value: "18–28 °C", label: "Kalträucherung" }, { value: "36 Std.", label: "Mindestverfahren" }, { value: "Neuenburg", label: "Herstellungsort" }]} />
       <section className="proof section-pad"><div><p className="eyebrow">IGP</p><h2>{t.proofTitle}</h2></div><div><p className="large-copy">{t.proofText}</p><ButtonLink href={routes[lang].product} secondary>{lang === "fr" ? "Découvrir le produit" : "Produkt entdecken"}</ButtonLink></div></section>
@@ -150,7 +151,7 @@ function AssociationHero({ lang, pageKey }: { lang: Lang; pageKey: PageKey }) {
   const page = pages[lang][pageKey];
   return <>
     <section className="association-hero">
-      <div className="association-hero-mark"><Image src={assetPath("/logo-anmb-boucherie.svg")} alt="Boucherie neuchâteloise" width={150} height={150} /><Image className="association-hero-signature" src={assetPath("/logo-anmb-signature.svg")} alt="Ma chair et tendre" width={230} height={28} /></div>
+      <div className="association-hero-mark"><Image src={assetPath("/logo-anmb-boucherie.png")} alt="Boucherie neuchâteloise" width={150} height={150} /><Image className="association-hero-signature" src={assetPath("/logo-anmb-signature.png")} alt="Ma chair et tendre" width={230} height={28} /></div>
       <div><p className="eyebrow light">{page.eyebrow}</p><h1>{page.title}</h1><p>{page.intro}</p></div>
     </section>
     <Facts items={page.facts} />
@@ -178,7 +179,7 @@ function AssociationPage({ lang, pageKey }: { lang: Lang; pageKey: "association"
       </section>}
       {pageKey === "partners" && <section className="partners-section section-pad">
         <aside className="network-note"><ShieldCheck size={24} /><p>{lang === "fr" ? "La présence d’un organisme ci-dessous indique son rôle dans l’écosystème ou comme source de référence. Elle ne signifie pas automatiquement l’existence d’un partenariat financier ou contractuel avec l’ANMB." : "Die Nennung einer Organisation bezeichnet ihre Rolle im Ökosystem oder als Referenzquelle. Sie bedeutet nicht automatisch eine finanzielle oder vertragliche Partnerschaft mit der ANMB."}</p></aside>
-        {partnerGroups.map(group => <section className="partner-group" key={group.title.fr}><div className="partner-group-heading"><p className="eyebrow">{lang === "fr" ? "Réseau" : "Netzwerk"}</p><h2>{group.title[lang]}</h2><p>{group.note[lang]}</p></div><div className="partner-grid">{group.partners.map(partner => <a className="partner-card" href={partner.href} target="_blank" rel="noreferrer" key={partner.name}><span className={partner.officialLogo ? "partner-mark official" : "partner-mark"}>{partner.officialLogo ? <Image src={assetPath("/logo-igp-officiel.jpg")} alt="IGP" width={62} height={60} /> : partner.mark}</span><span className="partner-copy"><strong>{partner.name}</strong><small>{partner.text[lang]}</small></span><ExternalLink size={18} /></a>)}</div></section>)}
+        {partnerGroups.map(group => <section className="partner-group" key={group.title.fr}><div className="partner-group-heading"><p className="eyebrow">{lang === "fr" ? "Réseau" : "Netzwerk"}</p><h2>{group.title[lang]}</h2><p>{group.note[lang]}</p></div><div className="partner-grid">{group.partners.map(partner => <a className="partner-card" href={partner.href} target="_blank" rel="noreferrer" key={partner.name}><span className={partner.officialLogo ? "partner-mark official" : "partner-mark"}>{partner.officialLogo ? <Image src={assetPath("/logo-igp-officiel.png")} alt="IGP" width={62} height={60} /> : partner.mark}</span><span className="partner-copy"><strong>{partner.name}</strong><small>{partner.text[lang]}</small></span><ExternalLink size={18} /></a>)}</div></section>)}
       </section>}
     </main>
     <Footer lang={lang} />
@@ -190,10 +191,10 @@ export function DetailPage({ lang, pageKey }: { lang: Lang; pageKey: PageKey }) 
   if (pageKey === "association" || pageKey === "committee" || pageKey === "partners") return <AssociationPage lang={lang} pageKey={pageKey} />;
   const page = pages[lang][pageKey];
   const visual = detailVisuals[pageKey];
-  return <><Header lang={lang} current={pageKey} /><main id="contenu"><section className="detail-hero"><div><p className="eyebrow light">{page.eyebrow}</p><h1>{page.title}</h1><p>{page.intro}</p></div><figure className="detail-visual"><Image src={assetPath(visual.src)} alt={visual.alt[lang]} fill sizes="(max-width: 760px) 100vw, 420px" style={{ objectPosition: visual.position }} /><figcaption>{visual.src === "/torree-hero.webp" ? (lang === "fr" ? "Illustration originale de la torrée" : "Originalillustration der Torrée") : (lang === "fr" ? "Photo : Association suisse des AOP-IGP" : "Foto: Schweizerische Vereinigung der AOP-IGP")}</figcaption></figure></section><Facts items={page.facts} /><section className="detail-content section-pad">{page.sections.map((section, index) => <article className="detail-section" key={section.title}><div className="section-number">{String(index + 1).padStart(2, "0")}</div><div><p className="eyebrow">{section.kicker}</p><h2>{section.title}</h2><p>{section.text}</p>{section.bullets && <ul>{section.bullets.map((bullet) => <li key={bullet}><Check size={18} />{bullet}</li>)}</ul>}</div></article>)}{page.note && <aside className="editorial-note"><Clock3 size={23} /><p>{page.note}</p></aside>}</section><section className="next-step"><div><p className="eyebrow light">{lang === "fr" ? "À vous de jouer" : "Jetzt sind Sie dran"}</p><h2>{lang === "fr" ? "Du savoir au plaisir, il n’y a qu’un pas." : "Vom Wissen zum Genuss ist es nur ein Schritt."}</h2></div><ButtonLink href={routes[lang].locator}>{ui[lang].find}</ButtonLink></section></main><Footer lang={lang} /></>;
+  return <><Header lang={lang} current={pageKey} /><main id="contenu"><section className="detail-hero"><div><p className="eyebrow light">{page.eyebrow}</p><h1>{page.title}</h1><p>{page.intro}</p></div><figure className="detail-visual"><Image src={assetPath(visual.src)} alt={visual.alt[lang]} fill sizes="(max-width: 760px) 100vw, 420px" style={{ objectPosition: visual.position }} /><figcaption>{visual.src === "/torree-hero.webp" ? <a href={torreePhotoUrl} target="_blank" rel="noreferrer">{lang === "fr" ? "Photo : Rasmus / Unsplash" : "Foto: Rasmus / Unsplash"}</a> : (lang === "fr" ? "Photo : Association suisse des AOP-IGP" : "Foto: Schweizerische Vereinigung der AOP-IGP")}</figcaption></figure></section><Facts items={page.facts} /><section className="detail-content section-pad">{page.sections.map((section, index) => <article className="detail-section" key={section.title}><div className="section-number">{String(index + 1).padStart(2, "0")}</div><div><p className="eyebrow">{section.kicker}</p><h2>{section.title}</h2><p>{section.text}</p>{section.bullets && <ul>{section.bullets.map((bullet) => <li key={bullet}><Check size={18} />{bullet}</li>)}</ul>}</div></article>)}{page.note && <aside className="editorial-note"><Clock3 size={23} /><p>{page.note}</p></aside>}</section><section className="next-step"><div><p className="eyebrow light">{lang === "fr" ? "À vous de jouer" : "Jetzt sind Sie dran"}</p><h2>{lang === "fr" ? "Du savoir au plaisir, il n’y a qu’un pas." : "Vom Wissen zum Genuss ist es nur ein Schritt."}</h2></div><ButtonLink href={routes[lang].locator}>{ui[lang].find}</ButtonLink></section></main><Footer lang={lang} /></>;
 }
 
 export function titleFor(lang: Lang, key: "home" | PageKey) {
-  if (key === "home") return lang === "fr" ? "Saucisson neuchâtelois IGP" : "Neuenburger Saucisson IGP";
-  return `${pages[lang][key].title} · ${lang === "fr" ? "Saucisson neuchâtelois IGP" : "Neuenburger Saucisson IGP"}`;
+  if (key === "home") return lang === "fr" ? "Saucisson neuchâtelois IGP & Saucisse neuchâteloise IGP" : "Neuenburger Saucisson IGP & Saucisse IGP";
+  return `${pages[lang][key].title} · ${lang === "fr" ? "Saucisson neuchâtelois IGP & Saucisse neuchâteloise IGP" : "Neuenburger Saucisson IGP & Neuenburger Saucisse IGP"}`;
 }

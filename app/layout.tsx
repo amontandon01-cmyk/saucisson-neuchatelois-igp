@@ -5,12 +5,13 @@ import "./globals.css";
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
 export const metadata: Metadata = {
-  title: "Saucisson neuchâtelois IGP",
+  title: "Saucisson neuchâtelois IGP & Saucisse neuchâteloise IGP",
   description:
-    "Le site du Saucisson neuchâtelois IGP : origine, cuisson, recettes, torrée et points de vente.",
+    "Le site du Saucisson neuchâtelois IGP et de la Saucisse neuchâteloise IGP : origine, cuisson, recettes, torrée et points de vente.",
   icons: {
-    icon: `${basePath}/logo-igp-officiel.jpg`,
-    shortcut: `${basePath}/logo-igp-officiel.jpg`,
+    icon: `${basePath}/favicon.png`,
+    shortcut: `${basePath}/favicon.png`,
+    apple: `${basePath}/favicon.png`,
   },
 };
 
