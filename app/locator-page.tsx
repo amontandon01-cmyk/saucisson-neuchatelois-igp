@@ -18,6 +18,7 @@ import {
   googleDirectionsUrl,
   googlePlaceUrl,
   locations,
+  publishedAnmbProducerIds,
   producerCount,
   RegionKey,
   SaleLocation,
@@ -130,7 +131,10 @@ export function LocatorPage({ lang }: { lang: Lang }) {
     directions: "Itinéraire",
     website: "Site de la boucherie",
     award: "Meilleur Saucisson neuchâtelois IGP 2026",
-    validation: "Version de travail : les neuf fabricants sont recoupés avec les sources publiques disponibles en 2026. Seule une liste fournie par l’ANMB ou l’organisme de certification permettra de confirmer officiellement le droit d’usage actuel de l’IGP.",
+    manufacturerStatus: "Fabricant IGP recensé",
+    anmbPublished: "Publié dans l’annuaire ANMB",
+    anmbNotPublished: "Non répertorié dans l’annuaire ANMB public",
+    validation: "Version de travail : les neuf fabricants sont recensés à partir des sources publiques disponibles en 2026. Seule une liste actuelle de l’ANMB ou de l’organisme de certification permettra de confirmer officiellement le droit d’usage de l’IGP. L’adhésion à l’ANMB est vérifiée séparément et n’est pas une condition équivalente.",
     source: "Source de l’adresse",
     dataNote: "Nous ne recopions pas les horaires ni les avis : ils évoluent et restent consultables directement sur Google.",
   } : {
@@ -147,7 +151,10 @@ export function LocatorPage({ lang }: { lang: Lang }) {
     directions: "Route",
     website: "Website der Metzgerei",
     award: "Bester Neuenburger Saucisson IGP 2026",
-    validation: "Arbeitsversion: Die neun Hersteller wurden mit den 2026 verfügbaren öffentlichen Quellen abgeglichen. Nur eine Liste der ANMB oder der Zertifizierungsstelle kann das aktuelle IGP-Nutzungsrecht offiziell bestätigen.",
+    manufacturerStatus: "Erfasster IGP-Hersteller",
+    anmbPublished: "Im ANMB-Verzeichnis publiziert",
+    anmbNotPublished: "Nicht im öffentlichen ANMB-Verzeichnis erfasst",
+    validation: "Arbeitsversion: Die neun Hersteller sind aus den 2026 verfügbaren öffentlichen Quellen erfasst. Nur eine aktuelle Liste der ANMB oder der Zertifizierungsstelle kann das IGP-Nutzungsrecht offiziell bestätigen. Die ANMB-Mitgliedschaft wird separat geprüft und ist nicht mit der Zertifizierung gleichzusetzen.",
     source: "Adressquelle",
     dataNote: "Öffnungszeiten und Bewertungen werden nicht kopiert: Sie ändern sich und bleiben direkt bei Google aktuell.",
   };
@@ -191,7 +198,7 @@ export function LocatorPage({ lang }: { lang: Lang }) {
 
     <section className="directory-section section-pad">
       <aside className="directory-validation"><ShieldCheck size={24} /><p>{copy.validation}</p></aside>
-      <div className="directory-scope"><div><Factory size={22} /><p><strong>{lang === "fr" ? "Ici : fabricants et vente des deux IGP" : "Hier: Hersteller und Verkauf der zwei IGP"}</strong><span>{lang === "fr" ? "Une entreprise apparaît une seule fois dans le total des fabricants, même lorsqu’elle possède plusieurs magasins." : "Ein Unternehmen wird bei den Herstellern nur einmal gezählt, auch wenn es mehrere Geschäfte hat."}</span></p></div><div><BriefcaseBusiness size={22} /><p><strong>{lang === "fr" ? "Ailleurs : tous les membres ANMB" : "Anderswo: alle ANMB-Mitglieder"}</strong><span>{lang === "fr" ? "L’adhésion professionnelle ne prouve pas une certification IGP." : "Die Verbandsmitgliedschaft belegt keine IGP-Zertifizierung."}</span></p><Link href={routes[lang].members}>{lang === "fr" ? "Ouvrir l’annuaire ANMB" : "ANMB-Verzeichnis öffnen"}<ExternalLink size={14} /></Link></div></div>
+      <div className="directory-scope"><div><Factory size={22} /><p><strong>{lang === "fr" ? "Ici : fabricants recensés et points de vente" : "Hier: erfasste Hersteller und Verkaufsstellen"}</strong><span>{lang === "fr" ? "La liste produit inclut les fabricants qu’ils soient membres de l’ANMB ou non. Une entreprise n’est comptée qu’une fois, même avec plusieurs magasins." : "Die Produktliste umfasst Hersteller mit oder ohne ANMB-Mitgliedschaft. Ein Unternehmen wird auch mit mehreren Geschäften nur einmal gezählt."}</span></p></div><div><BriefcaseBusiness size={22} /><p><strong>{lang === "fr" ? "Ailleurs : annuaire public des membres ANMB" : "Anderswo: öffentliches ANMB-Mitgliederverzeichnis"}</strong><span>{lang === "fr" ? "Il s’agit d’un statut associatif distinct : un membre n’est pas automatiquement certifié et un fabricant certifié peut être non-membre." : "Dies ist ein eigener Verbandsstatus: Ein Mitglied ist nicht automatisch zertifiziert, und ein zertifizierter Hersteller kann Nichtmitglied sein."}</span></p><Link href={routes[lang].members}>{lang === "fr" ? "Ouvrir l’annuaire ANMB" : "ANMB-Verzeichnis öffnen"}<ExternalLink size={14} /></Link></div></div>
       <div className="directory-toolbar">
         <label className="directory-search">
           <Search size={20} />
@@ -216,6 +223,7 @@ export function LocatorPage({ lang }: { lang: Lang }) {
             <span className="location-number">{index + 1}</span>
             <div><p className="location-producer"><Store size={16} />{item.producer}</p><h2>{item.location}</h2></div>
           </div>
+          <div className="location-status-row"><span className="location-status igp"><ShieldCheck size={14} />{copy.manufacturerStatus}</span><span className={publishedAnmbProducerIds.has(item.producerId) ? "location-status member" : "location-status not-listed"}><BriefcaseBusiness size={14} />{publishedAnmbProducerIds.has(item.producerId) ? copy.anmbPublished : copy.anmbNotPublished}</span></div>
           {item.award && <p className="location-award"><Trophy size={17} />{copy.award}</p>}
           <address><MapPin size={19} /><span>{item.address}<br />{item.postalCode} {item.city}</span></address>
           <a className="location-phone" href={`tel:${item.phone.replace(/\s/g, "")}`}><Phone size={18} />{item.phone}</a>

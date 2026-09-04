@@ -62,6 +62,7 @@ Avant la publication officielle, l’ANMB doit valider la liste des fabricants e
 - [Patrimoine culinaire suisse](https://www.patrimoineculinaire.ch/Produit/Saucisson-neuchatelois-IGP-saucisse-neuchateloise-IGP/29)
 - [AOP-IGP Suisse](https://www.aop-igp.ch/fr/au-sujet-des-aop-igp/index.php?id=303&L=2)
 - [Cahier des charges du Saucisson neuchâtelois IGP](https://www.aop-igp.ch/fileadmin/Dokumente/kampagne2025/Pflichtenhefte/SNE/Pflichtenheft%20FR%20Saucisson%20neuchatelois%20IGP.pdf)
+- [Contrôles et certification des AOP-IGP](https://www.aop-igp.ch/fr/au-sujet-des-aop-igp/aop-igp-en-suisse/controles-et-certification)
 - [Galerie officielle du Saucisson neuchâtelois IGP](https://www.aop-igp.ch/fr/saucisson-neuchatelois-igp/images-saucisson-neuchatelois-igp)
 - [Première Sélection du Saucisson neuchâtelois IGP 2026](https://cnci.ch/premiere-selection-du-saucisson-neuchatelois-igp)
 

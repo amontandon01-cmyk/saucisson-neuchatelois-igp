@@ -36,6 +36,17 @@ test("exports official AOP-IGP photography", async () => {
   assert.match(html, /aop-saucisson-planche\.webp/);
 });
 
+test("explains annual tasting and the IGP scoring criteria", async () => {
+  const french = await readFile("out/le-produit/index.html", "utf8");
+  const german = await readFile("out/de/das-produkt/index.html", "utf8");
+  assert.match(french, /évaluation organoleptique annuelle/);
+  assert.match(french, /Aspect extérieur/);
+  assert.match(french, /Saveur &amp; odeur/);
+  assert.match(french, /4<small>\/6/);
+  assert.match(french, /Contrôles AOP-IGP/);
+  assert.match(german, /jährlich sensorisch beurteilt/);
+});
+
 test("uses transparent official marks and names both protected products", async () => {
   const home = await readFile("out/index.html", "utf8");
   const recipes = await readFile("out/recettes/index.html", "utf8");
@@ -73,11 +84,15 @@ test("exports a distinct ANMB area and committee", async () => {
 test("separates ANMB members, IGP manufacturers and sale locations", async () => {
   const members = await readFile("out/anmb/membres/index.html", "utf8");
   const locator = await readFile("out/ou-acheter/index.html", "utf8");
-  assert.match(members, /21 organisations actives/);
+  assert.match(members, /21 organisations affichées/);
   assert.match(members, /Boucherie Au Gourmet/);
   assert.match(members, /Membre ANMB/);
   assert.match(members, /Fabricant IGP/);
-  assert.match(locator, /Ailleurs : tous les membres ANMB/);
+  assert.match(members, /Publié comme membre actif/);
+  assert.match(members, /peut aussi ne pas être membre/);
+  assert.match(locator, /annuaire public des membres ANMB/);
+  assert.match(locator, /Non répertorié dans l’annuaire ANMB public/);
+  assert.match(locator, /Publié dans l’annuaire ANMB/);
 });
 
 test("exports classified and clickable reference organisations", async () => {

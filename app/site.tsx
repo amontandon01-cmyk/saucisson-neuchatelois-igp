@@ -7,6 +7,8 @@ import { associationMembers, associationMembersSource } from "./members";
 
 const assetPath = (path: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${path}`;
 const torreePhotoUrl = "https://unsplash.com/photos/campfire-burning-with-smoke-in-a-forest-setting-Z38mI0BC8g4";
+const productSpecificationUrl = "https://www.aop-igp.ch/fileadmin/Dokumente/kampagne2025/Pflichtenhefte/SNE/Pflichtenheft%20FR%20Saucisson%20neuchatelois%20IGP.pdf";
+const certificationControlsUrl = "https://www.aop-igp.ch/fr/au-sujet-des-aop-igp/aop-igp-en-suisse/controles-et-certification";
 
 const detailVisuals: Record<Exclude<PageKey, "locator" | "members" | "committee" | "partners">, { src: string; alt: Record<Lang, string>; position?: string }> = {
   product: { src: "/aop-saucisson-planche.webp", alt: { fr: "Saucisson neuchâtelois IGP entier et tranché sur une planche", de: "Neuenburger Saucisson IGP, ganz und aufgeschnitten" } },
@@ -105,6 +107,35 @@ function Facts({ items }: { items: { value: string; label: string }[] }) {
   return <div className="facts">{items.map((item) => <div className="fact" key={item.label}><strong>{item.value}</strong><span>{item.label}</span></div>)}</div>;
 }
 
+function CertificationProof({ lang }: { lang: Lang }) {
+  const criteria = lang === "fr"
+    ? ["Aspect extérieur", "Aspect intérieur", "Consistance", "Saveur & odeur"]
+    : ["Äusseres", "Schnittbild", "Konsistenz", "Geschmack & Geruch"];
+  const stages = lang === "fr" ? [
+    { number: "01", title: "Contrôler la fabrication", text: "Des inspections, analyses et vérifications de traçabilité contrôlent le respect du cahier des charges." },
+    { number: "02", title: "Déguster le produit", text: "Le comité réunit la commission de contrôle de l’ANMB et peut faire appel à d’autres dégustateurs, professionnels ou non." },
+    { number: "03", title: "Maintenir le droit d’usage", text: "L’OIC assure la certification indépendante. En cas de non-conformité, le droit d’utiliser la dénomination protégée peut être retiré." },
+  ] : [
+    { number: "01", title: "Herstellung kontrollieren", text: "Inspektionen, Analysen und Rückverfolgbarkeitsprüfungen sichern die Einhaltung des Pflichtenhefts." },
+    { number: "02", title: "Produkt verkosten", text: "Das Komitee besteht aus der ANMB-Kontrollkommission und kann weitere, auch berufsfremde Verkoster beiziehen." },
+    { number: "03", title: "Nutzungsrecht erhalten", text: "Die OIC zertifiziert unabhängig. Bei Nichtkonformität kann das Recht auf die geschützte Bezeichnung entzogen werden." },
+  ];
+
+  return <section className="certification-proof">
+    <div className="certification-proof-inner section-pad">
+      <div className="certification-proof-heading">
+        <div><p className="eyebrow light">{lang === "fr" ? "Contrôles & dégustation" : "Kontrolle & Verkostung"}</p><h2>{lang === "fr" ? "L’IGP se mérite aussi à la dégustation." : "Die IGP muss auch bei der Verkostung überzeugen."}</h2></div>
+        <div><p>{lang === "fr" ? "Chaque unité de production fait l’objet d’une évaluation organoleptique annuelle. Pour conserver le droit d’utiliser l’IGP, le produit et sa fabrication doivent rester conformes au cahier des charges." : "Jede Produktionseinheit wird jährlich sensorisch beurteilt. Damit das Recht auf die IGP erhalten bleibt, müssen Produkt und Herstellung dem Pflichtenheft entsprechen."}</p><div className="certification-links"><a href={productSpecificationUrl} target="_blank" rel="noreferrer">{lang === "fr" ? "Cahier des charges" : "Pflichtenheft"}<ExternalLink size={14} /></a><a href={certificationControlsUrl} target="_blank" rel="noreferrer">{lang === "fr" ? "Contrôles AOP-IGP" : "AOP-IGP-Kontrollen"}<ExternalLink size={14} /></a></div></div>
+      </div>
+      <div className="certification-scorecard">
+        <div className="certification-score"><BadgeCheck size={30} /><strong>4<small>/6</small></strong><span>{lang === "fr" ? "minimum sur chacun des quatre critères" : "mindestens in jedem der vier Kriterien"}</span></div>
+        <div className="certification-criteria">{criteria.map((criterion, index) => <span key={criterion}><b>{String(index + 1).padStart(2, "0")}</b>{criterion}</span>)}</div>
+      </div>
+      <div className="certification-stages">{stages.map((stage) => <article key={stage.number}><span>{stage.number}</span><h3>{stage.title}</h3><p>{stage.text}</p></article>)}</div>
+    </div>
+  </section>;
+}
+
 function Footer({ lang }: { lang: Lang }) {
   const t = ui[lang];
   return <footer className="site-footer"><div className="footer-main">
@@ -179,11 +210,11 @@ function AssociationPage({ lang, pageKey }: { lang: Lang; pageKey: "association"
         <div className="taxonomy-intro"><div><p className="eyebrow">{lang === "fr" ? "Trois statuts distincts" : "Drei getrennte Rollen"}</p><h2>{lang === "fr" ? "Membre, fabricant, point de vente : ce n’est pas la même chose." : "Mitglied, Hersteller, Verkaufsstelle: nicht dasselbe."}</h2></div><p>{lang === "fr" ? "Cette séparation évite la confusion actuelle et permet de tenir chaque information à jour depuis sa source correcte." : "Diese Trennung verhindert die heutige Verwechslung und hält jede Information aus der richtigen Quelle aktuell."}</p></div>
         <div className="taxonomy-grid">
           <article><BriefcaseBusiness size={26} /><span>01</span><h3>{lang === "fr" ? "Membre ANMB" : "ANMB-Mitglied"}</h3><p>{lang === "fr" ? "Entreprise ou personne admise dans l’association professionnelle selon ses statuts." : "Unternehmen oder Person, die gemäss Statuten in den Berufsverband aufgenommen wurde."}</p></article>
-          <article><Factory size={26} /><span>02</span><h3>{lang === "fr" ? "Fabricant IGP" : "IGP-Hersteller"}</h3><p>{lang === "fr" ? "Entreprise qui fabrique l’une des deux spécialités selon le cahier des charges et le dispositif de certification." : "Betrieb, der eine der beiden Spezialitäten nach Pflichtenheft und Zertifizierungssystem herstellt."}</p><Link href={routes[lang].locator}>{lang === "fr" ? "Voir la liste de travail" : "Arbeitsliste ansehen"}<ArrowRight size={16} /></Link></article>
+          <article><Factory size={26} /><span>02</span><h3>{lang === "fr" ? "Fabricant IGP" : "IGP-Hersteller"}</h3><p>{lang === "fr" ? "Entreprise certifiée pour fabriquer l’une des deux spécialités. Elle peut être membre de l’ANMB ou ne pas l’être : la certification et l’adhésion sont indépendantes." : "Für eine der beiden Spezialitäten zertifizierter Betrieb. Er kann ANMB-Mitglied oder Nichtmitglied sein: Zertifizierung und Mitgliedschaft sind unabhängig."}</p><Link href={routes[lang].locator}>{lang === "fr" ? "Voir la liste de travail" : "Arbeitsliste ansehen"}<ArrowRight size={16} /></Link></article>
           <article><Store size={26} /><span>03</span><h3>{lang === "fr" ? "Point de vente" : "Verkaufsstelle"}</h3><p>{lang === "fr" ? "Magasin, succursale ou revendeur où le produit est proposé au public; ce n’est pas nécessairement un lieu de fabrication." : "Geschäft, Filiale oder Händler mit Produktverkauf; nicht zwingend ein Herstellungsort."}</p></article>
         </div>
-        <div className="members-heading"><div><p className="eyebrow">{lang === "fr" ? "Annuaire professionnel" : "Berufsverzeichnis"}</p><h2>{lang === "fr" ? "21 organisations actives publiées par l’ANMB." : "21 von der ANMB publizierte aktive Organisationen."}</h2></div><a href={associationMembersSource} target="_blank" rel="noreferrer">{lang === "fr" ? "Consulter la source ANMB" : "ANMB-Quelle öffnen"}<ExternalLink size={16} /></a></div>
-        <div className="member-grid">{associationMembers.map((member, index) => <article className="member-card" key={member.name}><span className="member-number">{String(index + 1).padStart(2, "0")}</span><div><h3>{member.name}</h3><p>{member.city}{member.locations ? ` · ${member.locations} ${lang === "fr" ? "adresses publiées" : "publizierte Adressen"}` : ""}</p></div>{member.website && <a href={member.website} target="_blank" rel="noreferrer" aria-label={`${member.name} · ${lang === "fr" ? "site internet" : "Website"}`}><ExternalLink size={18} /></a>}</article>)}</div>
+        <div className="members-heading"><div><p className="eyebrow">{lang === "fr" ? "Annuaire professionnel" : "Berufsverzeichnis"}</p><h2>{lang === "fr" ? "21 organisations affichées comme actives sur le site ANMB." : "21 auf der ANMB-Website als aktiv angezeigte Organisationen."}</h2></div><a href={associationMembersSource} target="_blank" rel="noreferrer">{lang === "fr" ? "Consulter la source ANMB" : "ANMB-Quelle öffnen"}<ExternalLink size={16} /></a></div>
+        <div className="member-grid">{associationMembers.map((member, index) => <article className="member-card" key={member.name}><span className="member-number">{String(index + 1).padStart(2, "0")}</span><div><h3>{member.name}</h3><p>{member.city}{member.locations ? ` · ${member.locations} ${lang === "fr" ? "adresses publiées" : "publizierte Adressen"}` : ""}</p><span className="member-published-status"><BriefcaseBusiness size={13} />{lang === "fr" ? "Publié comme membre actif" : "Als Aktivmitglied publiziert"}</span></div>{member.website && <a href={member.website} target="_blank" rel="noreferrer" aria-label={`${member.name} · ${lang === "fr" ? "site internet" : "Website"}`}><ExternalLink size={18} /></a>}</article>)}</div>
         <aside className="editorial-note"><Clock3 size={23} /><p>{page.note} <a href={associationMembersSource} target="_blank" rel="noreferrer">{lang === "fr" ? "Consulter la liste publique" : "Öffentliche Liste öffnen"}<ExternalLink size={14} /></a></p></aside>
       </section>}
       {pageKey === "committee" && <section className="committee-section section-pad">
@@ -209,7 +240,7 @@ export function DetailPage({ lang, pageKey }: { lang: Lang; pageKey: PageKey }) 
   if (pageKey === "association" || pageKey === "members" || pageKey === "committee" || pageKey === "partners") return <AssociationPage lang={lang} pageKey={pageKey} />;
   const page = pages[lang][pageKey];
   const visual = detailVisuals[pageKey];
-  return <><Header lang={lang} current={pageKey} /><main id="contenu"><section className="detail-hero"><div><p className="eyebrow light">{page.eyebrow}</p><h1>{page.title}</h1><p>{page.intro}</p></div><figure className="detail-visual"><Image src={assetPath(visual.src)} alt={visual.alt[lang]} fill sizes="(max-width: 760px) 100vw, 420px" style={{ objectPosition: visual.position }} /><figcaption>{visual.src === "/torree-hero.webp" ? <a href={torreePhotoUrl} target="_blank" rel="noreferrer">{lang === "fr" ? "Photo : Rasmus / Unsplash" : "Foto: Rasmus / Unsplash"}</a> : (lang === "fr" ? "Photo : Association suisse des AOP-IGP" : "Foto: Schweizerische Vereinigung der AOP-IGP")}</figcaption></figure></section><Facts items={page.facts} /><section className="detail-content section-pad">{page.sections.map((section, index) => <article className="detail-section" key={section.title}><div className="section-number">{String(index + 1).padStart(2, "0")}</div><div><p className="eyebrow">{section.kicker}</p><h2>{section.title}</h2><p>{section.text}</p>{section.bullets && <ul>{section.bullets.map((bullet) => <li key={bullet}><Check size={18} />{bullet}</li>)}</ul>}</div></article>)}{page.note && <aside className="editorial-note"><Clock3 size={23} /><p>{page.note}</p></aside>}</section><section className="next-step"><div><p className="eyebrow light">{lang === "fr" ? "À vous de jouer" : "Jetzt sind Sie dran"}</p><h2>{lang === "fr" ? "Du savoir au plaisir, il n’y a qu’un pas." : "Vom Wissen zum Genuss ist es nur ein Schritt."}</h2></div><ButtonLink href={routes[lang].locator}>{ui[lang].find}</ButtonLink></section></main><Footer lang={lang} /></>;
+  return <><Header lang={lang} current={pageKey} /><main id="contenu"><section className="detail-hero"><div><p className="eyebrow light">{page.eyebrow}</p><h1>{page.title}</h1><p>{page.intro}</p></div><figure className="detail-visual"><Image src={assetPath(visual.src)} alt={visual.alt[lang]} fill sizes="(max-width: 760px) 100vw, 420px" style={{ objectPosition: visual.position }} /><figcaption>{visual.src === "/torree-hero.webp" ? <a href={torreePhotoUrl} target="_blank" rel="noreferrer">{lang === "fr" ? "Photo : Rasmus / Unsplash" : "Foto: Rasmus / Unsplash"}</a> : (lang === "fr" ? "Photo : Association suisse des AOP-IGP" : "Foto: Schweizerische Vereinigung der AOP-IGP")}</figcaption></figure></section><Facts items={page.facts} /><section className="detail-content section-pad">{page.sections.map((section, index) => <article className="detail-section" key={section.title}><div className="section-number">{String(index + 1).padStart(2, "0")}</div><div><p className="eyebrow">{section.kicker}</p><h2>{section.title}</h2><p>{section.text}</p>{section.bullets && <ul>{section.bullets.map((bullet) => <li key={bullet}><Check size={18} />{bullet}</li>)}</ul>}</div></article>)}{page.note && <aside className="editorial-note"><Clock3 size={23} /><p>{page.note}</p></aside>}</section>{pageKey === "product" && <CertificationProof lang={lang} />}<section className="next-step"><div><p className="eyebrow light">{lang === "fr" ? "À vous de jouer" : "Jetzt sind Sie dran"}</p><h2>{lang === "fr" ? "Du savoir au plaisir, il n’y a qu’un pas." : "Vom Wissen zum Genuss ist es nur ein Schritt."}</h2></div><ButtonLink href={routes[lang].locator}>{ui[lang].find}</ButtonLink></section></main><Footer lang={lang} /></>;
 }
 
 export function titleFor(lang: Lang, key: "home" | PageKey) {

@@ -230,6 +230,21 @@ export const locations: SaleLocation[] = [
 
 export const producerCount = new Set(locations.map((item) => item.producerId)).size;
 
+/**
+ * Fabricants également affichés dans l'annuaire public « Membres actifs » de l'ANMB.
+ * Ce recoupement décrit uniquement la publication actuelle du site historique : il ne
+ * remplace ni le registre administratif des membres ni la liste de certification OIC.
+ */
+export const publishedAnmbProducerIds = new Set([
+  "christen",
+  "fontaine",
+  "leger",
+  "margot",
+  "montandon",
+  "prairie",
+  "schwartz",
+]);
+
 export function googlePlaceUrl(item: SaleLocation) {
   const query = `${item.producer}, ${item.location}, ${item.address}, ${item.postalCode} ${item.city}, Suisse`;
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
