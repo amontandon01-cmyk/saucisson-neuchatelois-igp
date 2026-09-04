@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import "leaflet/dist/leaflet.css";
 import "./globals.css";
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";

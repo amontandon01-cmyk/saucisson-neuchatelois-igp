@@ -1,45 +1,15 @@
 "use client";
 
-import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
-import {
-  BriefcaseBusiness,
-  ExternalLink,
-  Factory,
-  MapPin,
-  Navigation,
-  Phone,
-  Search,
-  ShieldCheck,
-  Store,
-  Trophy,
-} from "lucide-react";
-import {
-  googleDirectionsUrl,
-  googlePlaceUrl,
-  locations,
-  publishedAnmbProducerIds,
-  producerCount,
-  RegionKey,
-  SaleLocation,
-} from "./locations";
-import { Lang, routes } from "./content";
+import { useMemo, useState } from "react";
+import { ExternalLink, Factory, MapPin, Search, ShieldCheck, Store, Trophy } from "lucide-react";
+import { googlePlaceUrl, locations, producerCount, RegionKey } from "./locations";
+import { Lang } from "./content";
 
 const assetPath = (path: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${path}`;
 
 const regionLabels: Record<Lang, Record<"all" | RegionKey, string>> = {
-  fr: {
-    all: "Tout le canton",
-    mountains: "Montagnes",
-    littoral: "Littoral",
-    "val-de-ruz": "Val-de-Ruz",
-  },
-  de: {
-    all: "Ganzer Kanton",
-    mountains: "Bergregion",
-    littoral: "Seeufer",
-    "val-de-ruz": "Val-de-Ruz",
-  },
+  fr: { all: "Tout le canton", mountains: "Montagnes", littoral: "Littoral", "val-de-ruz": "Val-de-Ruz" },
+  de: { all: "Ganzer Kanton", mountains: "Bergregion", littoral: "Seeufer", "val-de-ruz": "Val-de-Ruz" },
 };
 
 function normalize(value: string) {
@@ -47,7 +17,7 @@ function normalize(value: string) {
 }
 
 function GoogleMark() {
-  return <span className="google-mark" aria-hidden="true"><svg viewBox="0 0 18 18" role="img">
+  return <span className="google-mark" aria-hidden="true"><svg viewBox="0 0 18 18">
     <path fill="#4285F4" d="M17.64 9.205c0-.638-.057-1.252-.164-1.841H9v3.481h4.844a4.14 4.14 0 0 1-1.797 2.716v2.258h2.909c1.702-1.567 2.684-3.878 2.684-6.614Z" />
     <path fill="#34A853" d="M9 18c2.43 0 4.468-.806 5.956-2.18l-2.909-2.258c-.806.54-1.835.859-3.047.859-2.344 0-4.328-1.585-5.037-3.714H.956v2.332A9 9 0 0 0 9 18Z" />
     <path fill="#FBBC05" d="M3.963 10.707A5.41 5.41 0 0 1 3.682 9c0-.592.102-1.168.281-1.707V4.961H.956A9 9 0 0 0 0 9c0 1.452.347 2.827.956 4.039l3.007-2.332Z" />
@@ -55,187 +25,67 @@ function GoogleMark() {
   </svg></span>;
 }
 
-function DirectoryMap({ items, lang }: { items: SaleLocation[]; lang: Lang }) {
-  const mapElement = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!mapElement.current) return;
-    let disposed = false;
-    let cleanup = () => {};
-
-    void import("leaflet").then((L) => {
-      if (disposed || !mapElement.current) return;
-
-      const map = L.map(mapElement.current, {
-        scrollWheelZoom: false,
-        zoomControl: true,
-      }).setView([47.035, 6.88], 10);
-
-      L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        maxZoom: 19,
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      }).addTo(map);
-
-      const bounds = L.latLngBounds([]);
-      items.forEach((item, index) => {
-        const icon = L.divIcon({
-          className: "directory-marker-wrap",
-          html: `<span class="directory-marker"><b>${index + 1}</b></span>`,
-          iconSize: [34, 40],
-          iconAnchor: [17, 38],
-        });
-        const marker = L.marker([item.latitude, item.longitude], { icon }).addTo(map);
-        marker.bindTooltip(`${item.producer} · ${item.location}`, { direction: "top" });
-        marker.on("click", () => document.getElementById(`location-${item.id}`)?.scrollIntoView({ behavior: "smooth", block: "center" }));
-        bounds.extend([item.latitude, item.longitude]);
-      });
-
-      if (items.length > 0) map.fitBounds(bounds, { padding: [34, 34], maxZoom: 13 });
-      window.setTimeout(() => map.invalidateSize(), 50);
-      cleanup = () => map.remove();
-    });
-
-    return () => {
-      disposed = true;
-      cleanup();
-    };
-  }, [items]);
-
-  return <div className="directory-map" ref={mapElement} role="region" aria-label={lang === "fr" ? "Carte des points de vente" : "Karte der Verkaufsstellen"} />;
-}
-
 export function LocatorPage({ lang }: { lang: Lang }) {
   const [region, setRegion] = useState<"all" | RegionKey>("all");
   const [query, setQuery] = useState("");
-
   const filtered = useMemo(() => {
     const term = normalize(query.trim());
     return locations.filter((item) => {
       const matchesRegion = region === "all" || item.region === region;
-      const haystack = normalize(`${item.producer} ${item.location} ${item.address} ${item.city}`);
+      const haystack = normalize(`${item.producer} ${item.location} ${item.city}`);
       return matchesRegion && (!term || haystack.includes(term));
     });
   }, [query, region]);
 
   const copy = lang === "fr" ? {
-    eyebrow: "Fabricants IGP & points de vente",
-    title: "Le Saucisson neuchâtelois IGP près de chez vous.",
-    intro: "Neuf fabricants recensés et leurs adresses de vente publiques réunis sur une seule carte. Pour les horaires, avis et fermetures exceptionnelles, la fiche Google reste la source la plus actuelle.",
-    producers: "fabricants recensés",
-    addresses: "adresses de vente",
-    regions: "régions",
-    updated: "mise à jour",
-    search: "Rechercher une boucherie ou une localité",
-    results: "adresses affichées",
-    maps: "Voir la fiche Google",
-    directions: "Itinéraire",
-    website: "Site de la boucherie",
-    award: "Meilleur Saucisson neuchâtelois IGP 2026",
-    manufacturerStatus: "Fabricant IGP recensé",
-    anmbPublished: "Publié dans l’annuaire ANMB",
-    anmbNotPublished: "Non répertorié dans l’annuaire ANMB public",
-    validation: "Version de travail : les neuf fabricants sont recensés à partir des sources publiques disponibles en 2026. Seule une liste actuelle de l’ANMB ou de l’organisme de certification permettra de confirmer officiellement le droit d’usage de l’IGP. L’adhésion à l’ANMB est vérifiée séparément et n’est pas une condition équivalente.",
-    source: "Source de l’adresse",
-    dataNote: "Nous ne recopions pas les horaires ni les avis : ils évoluent et restent consultables directement sur Google.",
+    eyebrow: "Fabricants certifiés & points de vente", title: "Le Saucisson neuchâtelois IGP près de chez vous.",
+    intro: "Neuf fabricants certifiés et leurs points de vente publics. Les fiches Google donnent directement les coordonnées, les horaires et les avis les plus récents.",
+    producers: "fabricants certifiés", locations: "points de vente", regions: "régions", products: "produits IGP",
+    search: "Rechercher un fabricant ou une localité", results: "points de vente affichés", maps: "Fiche Google", website: "Site officiel",
+    award: "Meilleur Saucisson neuchâtelois IGP 2026", manufacturerStatus: "Fabricant certifié IGP",
+    dataNote: "Les coordonnées et horaires ne sont pas recopiés : ouvrez la fiche Google pour obtenir l’information à jour.", empty: "Aucun point de vente ne correspond à cette recherche.",
   } : {
-    eyebrow: "IGP-Hersteller & Verkaufsstellen",
-    title: "Neuenburger Saucisson IGP in Ihrer Nähe.",
-    intro: "Neun produzierende Betriebe und ihre öffentlichen Adressen auf einer Karte. Aktuelle Öffnungszeiten, Bewertungen und Sonderöffnungen finden Sie direkt im Google-Eintrag.",
-    producers: "erfasste Hersteller",
-    addresses: "Verkaufsadressen",
-    regions: "Regionen",
-    updated: "aktualisiert",
-    search: "Metzgerei oder Ort suchen",
-    results: "Adressen angezeigt",
-    maps: "Google-Eintrag öffnen",
-    directions: "Route",
-    website: "Website der Metzgerei",
-    award: "Bester Neuenburger Saucisson IGP 2026",
-    manufacturerStatus: "Erfasster IGP-Hersteller",
-    anmbPublished: "Im ANMB-Verzeichnis publiziert",
-    anmbNotPublished: "Nicht im öffentlichen ANMB-Verzeichnis erfasst",
-    validation: "Arbeitsversion: Die neun Hersteller sind aus den 2026 verfügbaren öffentlichen Quellen erfasst. Nur eine aktuelle Liste der ANMB oder der Zertifizierungsstelle kann das IGP-Nutzungsrecht offiziell bestätigen. Die ANMB-Mitgliedschaft wird separat geprüft und ist nicht mit der Zertifizierung gleichzusetzen.",
-    source: "Adressquelle",
-    dataNote: "Öffnungszeiten und Bewertungen werden nicht kopiert: Sie ändern sich und bleiben direkt bei Google aktuell.",
+    eyebrow: "Zertifizierte Hersteller & Verkaufsstellen", title: "Neuenburger Saucisson IGP in Ihrer Nähe.",
+    intro: "Neun zertifizierte Hersteller und ihre öffentlichen Verkaufsstellen. Aktuelle Kontaktdaten, Öffnungszeiten und Bewertungen finden Sie direkt im Google-Eintrag.",
+    producers: "zertifizierte Hersteller", locations: "Verkaufsstellen", regions: "Regionen", products: "IGP-Produkte",
+    search: "Hersteller oder Ort suchen", results: "Verkaufsstellen angezeigt", maps: "Google-Eintrag", website: "Offizielle Website",
+    award: "Bester Neuenburger Saucisson IGP 2026", manufacturerStatus: "IGP-zertifizierter Hersteller",
+    dataNote: "Kontaktdaten und Öffnungszeiten werden nicht kopiert: Der Google-Eintrag enthält den aktuellen Stand.", empty: "Keine Verkaufsstelle entspricht dieser Suche.",
   };
 
-  const structuredData = locations.map((item) => ({
+  const structuredData = {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    name: `${item.producer} · ${item.location}`,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: item.address,
-      postalCode: item.postalCode,
-      addressLocality: item.city,
-      addressCountry: "CH",
-    },
-    telephone: item.phone,
-    url: item.website ?? googlePlaceUrl(item),
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: item.latitude,
-      longitude: item.longitude,
-    },
-    sameAs: [googlePlaceUrl(item), ...(item.website ? [item.website] : [])],
-  }));
+    "@type": "ItemList",
+    name: lang === "fr" ? "Fabricants certifiés et points de vente" : "Zertifizierte Hersteller und Verkaufsstellen",
+    numberOfItems: locations.length,
+    itemListElement: locations.map((item, index) => ({
+      "@type": "ListItem", position: index + 1,
+      item: { "@type": "Organization", name: `${item.producer} · ${item.location}`, addressLocality: item.city, url: item.website ?? googlePlaceUrl(item), sameAs: [googlePlaceUrl(item), ...(item.website ? [item.website] : [])] },
+    })),
+  };
 
   return <>
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
     <section className="locator-hero" style={{ backgroundImage: `linear-gradient(118deg, rgba(23,35,30,.96), rgba(23,35,30,.82)), url('${assetPath("/aop-paysage.webp")}')` }}>
-      <div>
-        <p className="eyebrow light">{copy.eyebrow}</p>
-        <h1>{copy.title}</h1>
-        <p>{copy.intro}</p>
-      </div>
-      <div className="locator-stats" aria-label={lang === "fr" ? "Chiffres de l’annuaire" : "Verzeichnis in Zahlen"}>
-        <div><strong>{producerCount}</strong><span>{copy.producers}</span></div>
-        <div><strong>{locations.length}</strong><span>{copy.addresses}</span></div>
-        <div><strong>3</strong><span>{copy.regions}</span></div>
-        <div><strong>03.09.2026</strong><span>{copy.updated}</span></div>
+      <div><p className="eyebrow light">{copy.eyebrow}</p><h1>{copy.title}</h1><p>{copy.intro}</p></div>
+      <div className="locator-stats" aria-label={lang === "fr" ? "Chiffres du répertoire" : "Verzeichnis in Zahlen"}>
+        <div><strong>{producerCount}</strong><span>{copy.producers}</span></div><div><strong>{locations.length}</strong><span>{copy.locations}</span></div><div><strong>3</strong><span>{copy.regions}</span></div><div><strong>2</strong><span>{copy.products}</span></div>
       </div>
     </section>
-
     <section className="directory-section section-pad">
-      <aside className="directory-validation"><ShieldCheck size={24} /><p>{copy.validation}</p></aside>
-      <div className="directory-scope"><div><Factory size={22} /><p><strong>{lang === "fr" ? "Ici : fabricants recensés et points de vente" : "Hier: erfasste Hersteller und Verkaufsstellen"}</strong><span>{lang === "fr" ? "La liste produit inclut les fabricants qu’ils soient membres de l’ANMB ou non. Une entreprise n’est comptée qu’une fois, même avec plusieurs magasins." : "Die Produktliste umfasst Hersteller mit oder ohne ANMB-Mitgliedschaft. Ein Unternehmen wird auch mit mehreren Geschäften nur einmal gezählt."}</span></p></div><div><BriefcaseBusiness size={22} /><p><strong>{lang === "fr" ? "Ailleurs : annuaire public des membres ANMB" : "Anderswo: öffentliches ANMB-Mitgliederverzeichnis"}</strong><span>{lang === "fr" ? "Il s’agit d’un statut associatif distinct : un membre n’est pas automatiquement certifié et un fabricant certifié peut être non-membre." : "Dies ist ein eigener Verbandsstatus: Ein Mitglied ist nicht automatisch zertifiziert, und ein zertifizierter Hersteller kann Nichtmitglied sein."}</span></p><Link href={routes[lang].members}>{lang === "fr" ? "Ouvrir l’annuaire ANMB" : "ANMB-Verzeichnis öffnen"}<ExternalLink size={14} /></Link></div></div>
+      <aside className="directory-validation"><ShieldCheck size={24} /><p>{lang === "fr" ? "La certification IGP et l’adhésion à l’ANMB sont deux statuts indépendants. Cette page réunit les fabricants certifiés, qu’ils soient membres de l’association ou non." : "IGP-Zertifizierung und ANMB-Mitgliedschaft sind unabhängig. Diese Seite umfasst alle zertifizierten Hersteller, ob Verbandsmitglied oder nicht."}</p></aside>
       <div className="directory-toolbar">
-        <label className="directory-search">
-          <Search size={20} />
-          <span className="sr-only">{copy.search}</span>
-          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={copy.search} />
-        </label>
-        <div className="directory-filters" aria-label={lang === "fr" ? "Filtrer par région" : "Nach Region filtern"}>
-          {(Object.keys(regionLabels[lang]) as ("all" | RegionKey)[]).map((key) => <button type="button" className={region === key ? "active" : ""} onClick={() => setRegion(key)} key={key}>{regionLabels[lang][key]}</button>)}
-        </div>
+        <label className="directory-search"><Search size={20} /><span className="sr-only">{copy.search}</span><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder={copy.search} /></label>
+        <div className="directory-filters" aria-label={lang === "fr" ? "Filtrer par région" : "Nach Region filtern"}>{(Object.keys(regionLabels[lang]) as ("all" | RegionKey)[]).map((key) => <button type="button" className={region === key ? "active" : ""} onClick={() => setRegion(key)} key={key}>{regionLabels[lang][key]}</button>)}</div>
       </div>
-
-      <DirectoryMap items={filtered} lang={lang} />
-
-      <div className="directory-result-head">
-        <p aria-live="polite"><strong>{filtered.length}</strong> {copy.results}</p>
-        <p>{copy.dataNote}</p>
-      </div>
-
-      <div className="location-grid">
-        {filtered.map((item, index) => <article className="location-card" id={`location-${item.id}`} key={item.id}>
-          <div className="location-card-head">
-            <span className="location-number">{index + 1}</span>
-            <div><p className="location-producer"><Store size={16} />{item.producer}</p><h2>{item.location}</h2></div>
-          </div>
-          <div className="location-status-row"><span className="location-status igp"><ShieldCheck size={14} />{copy.manufacturerStatus}</span><span className={publishedAnmbProducerIds.has(item.producerId) ? "location-status member" : "location-status not-listed"}><BriefcaseBusiness size={14} />{publishedAnmbProducerIds.has(item.producerId) ? copy.anmbPublished : copy.anmbNotPublished}</span></div>
-          {item.award && <p className="location-award"><Trophy size={17} />{copy.award}</p>}
-          <address><MapPin size={19} /><span>{item.address}<br />{item.postalCode} {item.city}</span></address>
-          <a className="location-phone" href={`tel:${item.phone.replace(/\s/g, "")}`}><Phone size={18} />{item.phone}</a>
-          <div className="location-actions">
-            <a href={googlePlaceUrl(item)} target="_blank" rel="noreferrer"><GoogleMark />{copy.maps}</a>
-            <a href={googleDirectionsUrl(item)} target="_blank" rel="noreferrer"><Navigation size={17} />{copy.directions}</a>
-            {item.website && <a href={item.website} target="_blank" rel="noreferrer"><ExternalLink size={17} />{copy.website}</a>}
-          </div>
-          <a className="location-source" href={item.sourceUrl} target="_blank" rel="noreferrer">{copy.source}</a>
-        </article>)}
-      </div>
-      {filtered.length === 0 && <div className="directory-empty"><MapPin size={28} /><p>{lang === "fr" ? "Aucune adresse ne correspond à cette recherche." : "Keine Adresse entspricht dieser Suche."}</p></div>}
+      <div className="directory-result-head"><p aria-live="polite"><strong>{filtered.length}</strong> {copy.results}</p><p>{copy.dataNote}</p></div>
+      <div className="location-grid">{filtered.map((item, index) => <article className="location-card" id={`location-${item.id}`} key={item.id}>
+        <div className="location-card-head"><span className="location-number">{index + 1}</span><div><p className="location-producer"><Store size={16} />{item.producer}</p><h2>{item.location}</h2></div></div>
+        <span className="location-city"><MapPin size={17} />{item.city}</span><span className="location-status igp"><ShieldCheck size={14} />{copy.manufacturerStatus}</span>
+        {item.award && <p className="location-award"><Trophy size={17} />{copy.award}</p>}
+        <div className="location-actions"><a href={googlePlaceUrl(item)} target="_blank" rel="noreferrer"><GoogleMark />{copy.maps}</a>{item.website && <a href={item.website} target="_blank" rel="noreferrer"><ExternalLink size={17} />{copy.website}</a>}</div>
+      </article>)}</div>
+      {filtered.length === 0 && <div className="directory-empty"><Factory size={28} /><p>{copy.empty}</p></div>}
     </section>
   </>;
 }

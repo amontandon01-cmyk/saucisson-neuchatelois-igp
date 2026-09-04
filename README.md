@@ -7,7 +7,7 @@ Site bilingue du Saucisson neuchâtelois IGP et de l’ANMB.
 - expliquer clairement le produit et la valeur de l’IGP ;
 - donner une méthode de cuisson fiable et des idées de recettes ;
 - faire vivre la torrée sans négliger les règles de sécurité ;
-- distinguer les membres ANMB, les fabricants IGP recensés et les points de vente ;
+- distinguer l’adhésion ANMB, les fabricants certifiés IGP et les points de vente ;
 - proposer une entrée distincte pour le commerce, la gastronomie et les médias ;
 - atteindre la Suisse alémanique avec de vraies pages allemandes et des URL propres.
 
@@ -23,8 +23,10 @@ Site bilingue du Saucisson neuchâtelois IGP et de l’ANMB.
 | `/ou-acheter` | `/de/verkaufsstellen` | Annuaire validé |
 | `/professionnels` | `/de/fachhandel` | Commerce, gastronomie, presse |
 | `/anmb` | `/de/anmb` | Association professionnelle |
+| `/anmb/membres` | `/de/anmb/mitglieder` | Adhésion et distinction des statuts |
 | `/anmb/comite` | `/de/anmb/vorstand` | Comité et gouvernance |
-| `/anmb/reseau` | `/de/anmb/netzwerk` | Partenaires et organismes de référence |
+| `/anmb/reseau` | `/de/anmb/netzwerk` | Réseau et organismes de référence |
+| `/protection-des-donnees` | `/de/datenschutz` | Données, hébergement et liens externes |
 
 ## Développement et publication GitHub Pages
 
@@ -49,8 +51,8 @@ Chaque envoi sur la branche `main` déclenche le workflow `.github/workflows/dep
 ## Mise à jour des contenus
 
 - Les textes et routes se trouvent dans `app/content.ts`.
-- Les fabricants recensés et points de vente se trouvent dans `app/locations.ts`.
-- Les membres actifs publiés par l’ANMB se trouvent dans `app/members.ts`.
+- Les fabricants certifiés et points de vente se trouvent dans `app/locations.ts`.
+- Le répertoire de recettes et ses sources se trouvent dans `app/recipes-page.tsx`.
 - La structure des pages se trouve dans `app/site.tsx`.
 - L’identité visuelle et l’affichage mobile se trouvent dans `app/globals.css`.
 - Les ressources visuelles se trouvent dans `public/`.
@@ -68,7 +70,7 @@ Avant la publication officielle, l’ANMB doit valider la liste des fabricants e
 
 Le visuel d’ambiance de la torrée est une photographie réelle de feu en forêt par [Rasmus sur Unsplash](https://unsplash.com/photos/campfire-burning-with-smoke-in-a-forest-setting-Z38mI0BC8g4), utilisée selon la [licence Unsplash](https://unsplash.com/license). Il ne présente pas une torrée documentaire et devra idéalement être remplacé par une photographie neuchâteloise dont l’ANMB possède les droits.
 
-Les photographies du produit et du territoire proviennent de la galerie de l’Association suisse des AOP-IGP. Les fichiers HD et le droit de republication doivent être confirmés avant le lancement officiel. La carte utilise les données © contributeurs OpenStreetMap sous licence ODbL. Les boutons Google reposent sur les URL universelles Google Maps sans clé API.
+Les photographies du produit et du territoire proviennent de la galerie de l’Association suisse des AOP-IGP. Les fichiers HD et le droit de republication doivent être confirmés avant le lancement officiel. Les boutons Google reposent sur les URL universelles Google Maps sans clé API ; aucune carte ni fiche Google n’est intégrée dans la page.
 
 ## Identité officielle
 
