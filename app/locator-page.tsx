@@ -2,7 +2,9 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
+  BriefcaseBusiness,
   ExternalLink,
+  Factory,
   MapPin,
   Navigation,
   Phone,
@@ -20,6 +22,8 @@ import {
   SaleLocation,
 } from "./locations";
 import { Lang } from "./content";
+import { routes } from "./content";
+import Link from "next/link";
 
 const assetPath = (path: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${path}`;
 
@@ -114,11 +118,11 @@ export function LocatorPage({ lang }: { lang: Lang }) {
   }, [query, region]);
 
   const copy = lang === "fr" ? {
-    eyebrow: "Producteurs & points de vente",
+    eyebrow: "Fabricants IGP & points de vente",
     title: "Le Saucisson neuchâtelois IGP près de chez vous.",
-    intro: "Neuf maisons productrices et leurs adresses publiques réunies sur une seule carte. Pour les horaires, avis et fermetures exceptionnelles, la fiche Google reste la source la plus actuelle.",
-    producers: "producteurs IGP",
-    addresses: "adresses publiques",
+    intro: "Neuf fabricants recensés et leurs adresses de vente publiques réunis sur une seule carte. Pour les horaires, avis et fermetures exceptionnelles, la fiche Google reste la source la plus actuelle.",
+    producers: "fabricants recensés",
+    addresses: "adresses de vente",
     regions: "régions",
     updated: "mise à jour",
     search: "Rechercher une boucherie ou une localité",
@@ -127,15 +131,15 @@ export function LocatorPage({ lang }: { lang: Lang }) {
     directions: "Itinéraire",
     website: "Site de la boucherie",
     award: "Meilleur Saucisson neuchâtelois IGP 2026",
-    validation: "Version de travail : les neuf producteurs sont recoupés avec les sources publiques disponibles en 2026. L’ANMB ou l’organisme de certification doit confirmer la liste avant le lancement officiel.",
+    validation: "Version de travail : les neuf fabricants sont recoupés avec les sources publiques disponibles en 2026. Seule une liste fournie par l’ANMB ou l’organisme de certification permettra de confirmer officiellement le droit d’usage actuel de l’IGP.",
     source: "Source de l’adresse",
     dataNote: "Nous ne recopions pas les horaires ni les avis : ils évoluent et restent consultables directement sur Google.",
   } : {
-    eyebrow: "Produzenten & Verkaufsstellen",
+    eyebrow: "IGP-Hersteller & Verkaufsstellen",
     title: "Neuenburger Saucisson IGP in Ihrer Nähe.",
     intro: "Neun produzierende Betriebe und ihre öffentlichen Adressen auf einer Karte. Aktuelle Öffnungszeiten, Bewertungen und Sonderöffnungen finden Sie direkt im Google-Eintrag.",
-    producers: "IGP-Produzenten",
-    addresses: "öffentliche Adressen",
+    producers: "erfasste Hersteller",
+    addresses: "Verkaufsadressen",
     regions: "Regionen",
     updated: "aktualisiert",
     search: "Metzgerei oder Ort suchen",
@@ -144,7 +148,7 @@ export function LocatorPage({ lang }: { lang: Lang }) {
     directions: "Route",
     website: "Website der Metzgerei",
     award: "Bester Neuenburger Saucisson IGP 2026",
-    validation: "Arbeitsversion: Die neun Produzenten wurden mit den 2026 verfügbaren öffentlichen Quellen abgeglichen. Vor dem offiziellen Start muss die ANMB oder die Zertifizierungsstelle die Liste bestätigen.",
+    validation: "Arbeitsversion: Die neun Hersteller wurden mit den 2026 verfügbaren öffentlichen Quellen abgeglichen. Nur eine Liste der ANMB oder der Zertifizierungsstelle kann das aktuelle IGP-Nutzungsrecht offiziell bestätigen.",
     source: "Adressquelle",
     dataNote: "Öffnungszeiten und Bewertungen werden nicht kopiert: Sie ändern sich und bleiben direkt bei Google aktuell.",
   };
@@ -188,6 +192,7 @@ export function LocatorPage({ lang }: { lang: Lang }) {
 
     <section className="directory-section section-pad">
       <aside className="directory-validation"><ShieldCheck size={24} /><p>{copy.validation}</p></aside>
+      <div className="directory-scope"><div><Factory size={22} /><p><strong>{lang === "fr" ? "Ici : fabricants et vente des deux IGP" : "Hier: Hersteller und Verkauf der zwei IGP"}</strong><span>{lang === "fr" ? "Une entreprise apparaît une seule fois dans le total des fabricants, même lorsqu’elle possède plusieurs magasins." : "Ein Unternehmen wird bei den Herstellern nur einmal gezählt, auch wenn es mehrere Geschäfte hat."}</span></p></div><div><BriefcaseBusiness size={22} /><p><strong>{lang === "fr" ? "Ailleurs : tous les membres ANMB" : "Anderswo: alle ANMB-Mitglieder"}</strong><span>{lang === "fr" ? "L’adhésion professionnelle ne prouve pas une certification IGP." : "Die Verbandsmitgliedschaft belegt keine IGP-Zertifizierung."}</span></p><Link href={routes[lang].members}>{lang === "fr" ? "Ouvrir l’annuaire ANMB" : "ANMB-Verzeichnis öffnen"}<ExternalLink size={14} /></Link></div></div>
       <div className="directory-toolbar">
         <label className="directory-search">
           <Search size={20} />

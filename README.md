@@ -7,7 +7,7 @@ Site bilingue du Saucisson neuchâtelois IGP et de l’ANMB.
 - expliquer clairement le produit et la valeur de l’IGP ;
 - donner une méthode de cuisson fiable et des idées de recettes ;
 - faire vivre la torrée sans négliger les règles de sécurité ;
-- réunir les producteurs et points de vente dans un annuaire validé ;
+- distinguer les membres ANMB, les fabricants IGP recensés et les points de vente ;
 - proposer une entrée distincte pour le commerce, la gastronomie et les médias ;
 - atteindre la Suisse alémanique avec de vraies pages allemandes et des URL propres.
 
@@ -49,12 +49,13 @@ Chaque envoi sur la branche `main` déclenche le workflow `.github/workflows/dep
 ## Mise à jour des contenus
 
 - Les textes et routes se trouvent dans `app/content.ts`.
-- Les producteurs et points de vente se trouvent dans `app/locations.ts`.
+- Les fabricants recensés et points de vente se trouvent dans `app/locations.ts`.
+- Les membres actifs publiés par l’ANMB se trouvent dans `app/members.ts`.
 - La structure des pages se trouve dans `app/site.tsx`.
 - L’identité visuelle et l’affichage mobile se trouvent dans `app/globals.css`.
 - Les ressources visuelles se trouvent dans `public/`.
 
-Avant la publication publique, l’ANMB doit valider la liste des producteurs et revendeurs, les coordonnées de contact, les traductions allemandes et tout visuel photographique officiel.
+Avant la publication officielle, l’ANMB doit valider la liste des fabricants et revendeurs, la fonction exacte du référent IGP, les coordonnées de contact, les traductions allemandes et tout visuel photographique officiel.
 
 ## Sources éditoriales principales
 

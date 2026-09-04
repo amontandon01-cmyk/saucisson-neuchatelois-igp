@@ -24,7 +24,7 @@ test("uses the configured GitHub Pages base path", async () => {
 
 test("exports the complete producer directory and live map links", async () => {
   const html = await readFile("out/ou-acheter/index.html", "utf8");
-  assert.match(html, /Neuf maisons productrices/);
+  assert.match(html, /Neuf fabricants recensés/);
   assert.match(html, /Boucherie Schneiter/);
   assert.match(html, /Christen Delicatessen/);
   assert.match(html, /google\.com\/maps\/search/);
@@ -56,6 +56,7 @@ test("credits the real torrée atmosphere photograph", async () => {
 test("exports a distinct ANMB area and committee", async () => {
   await Promise.all([
     access("out/anmb/index.html"),
+    access("out/anmb/membres/index.html"),
     access("out/anmb/comite/index.html"),
     access("out/anmb/reseau/index.html"),
     access("out/de/anmb/vorstand/index.html"),
@@ -65,6 +66,18 @@ test("exports a distinct ANMB area and committee", async () => {
   assert.match(html, /Alexandre Léger/);
   assert.match(html, /Pierre Montandon/);
   assert.match(html, /Membre du comité/);
+  assert.match(html, /Arthur Montandon/);
+  assert.match(html, /Référent ANMB des deux IGP/);
+});
+
+test("separates ANMB members, IGP manufacturers and sale locations", async () => {
+  const members = await readFile("out/anmb/membres/index.html", "utf8");
+  const locator = await readFile("out/ou-acheter/index.html", "utf8");
+  assert.match(members, /21 organisations actives/);
+  assert.match(members, /Boucherie Au Gourmet/);
+  assert.match(members, /Membre ANMB/);
+  assert.match(members, /Fabricant IGP/);
+  assert.match(locator, /Ailleurs : tous les membres ANMB/);
 });
 
 test("exports classified and clickable reference organisations", async () => {
