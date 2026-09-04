@@ -39,7 +39,7 @@ const partnerGroups = [
     title: { fr: "Réseaux professionnels", de: "Berufsnetzwerke" },
     note: { fr: "Organisations qui soutiennent la branche, la formation et l’économie cantonale.", de: "Organisationen für Branche, Berufsbildung und kantonale Wirtschaft." },
     partners: [
-      { logo: "/logo-sff.svg", name: "SFF · Schweizer Fleisch-Fachverband", href: "https://sff.ch/fr", text: { fr: "Organisation nationale de la branche carnée.", de: "Nationale Organisation der Fleischbranche." } },
+      { logo: "/logo-sff.svg", darkLogo: true, name: "SFF · Schweizer Fleisch-Fachverband", href: "https://sff.ch/fr", text: { fr: "Organisation nationale de la branche carnée.", de: "Nationale Organisation der Fleischbranche." } },
       { logo: "/logo-ren.svg", name: "Réseau d’entreprises formatrices neuchâteloises", href: "https://reneuchatel.ch/", text: { fr: "Réseau cantonal consacré à la formation professionnelle.", de: "Kantonales Netzwerk für die Berufsbildung." } },
       { logo: "/logo-cnci.png", darkLogo: true, name: "Chambre neuchâteloise du commerce et de l’industrie", href: "https://www.cnci.ch/", text: { fr: "Secrétariat patronal et relais économique cantonal.", de: "Arbeitgebersekretariat und kantonales Wirtschaftsnetzwerk." } },
     ],

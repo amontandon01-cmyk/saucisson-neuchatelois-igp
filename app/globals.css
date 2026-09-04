@@ -323,9 +323,9 @@ p { line-height: 1.75; }
 .partner-group-heading h2 { max-width: 430px; font-size: clamp(2rem, 3vw, 3rem); }
 .partner-group-heading > p:not(.eyebrow) { max-width: 430px; color: #657169; font-size: .9rem; }
 .partner-grid { display: grid; gap: .75rem; }
-.partner-card { min-height: 116px; display: grid; grid-template-columns: 74px 1fr auto; align-items: center; gap: 1.2rem; padding: 1.1rem 1.3rem; background: white; border: 1px solid var(--line); border-radius: var(--radius-md); transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; }
+.partner-card { min-height: 116px; display: grid; grid-template-columns: 112px 1fr auto; align-items: center; gap: 1.2rem; padding: 1.1rem 1.3rem; background: white; border: 1px solid var(--line); border-radius: var(--radius-md); transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; }
 .partner-card:hover { transform: translateX(4px); border-color: var(--green); box-shadow: 0 12px 30px rgba(23,35,30,.08); }
-.partner-mark { width: 74px; height: 66px; display: grid; place-items: center; padding: .3rem; background: white; }
+.partner-mark { width: 112px; height: 70px; display: grid; place-items: center; padding: .3rem; background: white; }
 .partner-mark.official { background: white; border: 0; }
 .partner-mark.official.dark { padding: .75rem .45rem; background: var(--ink); }
 .partner-mark.official img { width: 100%; height: 100%; object-fit: contain; }
@@ -481,8 +481,8 @@ p { line-height: 1.75; }
   .committee-grid { grid-template-columns: 1fr; }
   .taxonomy-intro, .igp-governance-heading { grid-template-columns: 1fr; }
   .taxonomy-grid { margin-bottom: 5rem; }
-  .partner-card { grid-template-columns: 58px 1fr auto; gap: .8rem; padding: 1rem; }
-  .partner-mark { width: 52px; height: 52px; }
+  .partner-card { grid-template-columns: 74px 1fr auto; gap: .8rem; padding: 1rem; }
+  .partner-mark { width: 74px; height: 58px; }
   .locator-hero { min-height: 680px; grid-template-columns: 1fr; padding: 5rem 1.5rem; }
   .locator-stats div { min-height: 105px; }
   .directory-section { padding-top: 2rem; }
