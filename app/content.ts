@@ -136,7 +136,7 @@ const fr: Record<PageKey, DetailContent> = {
   committee: {
     eyebrow: "Association · Gouvernance", title: "Le comité de l’ANMB.", intro: "Le comité gouverne l’association professionnelle. Le pilotage quotidien des deux IGP et la certification sont présentés séparément afin que chaque responsabilité soit compréhensible.",
     facts: [{ value: "7", label: "membres publiés" }, { value: "1", label: "président" }, { value: "NE", label: "représentation cantonale" }, { value: "2026", label: "vérification requise" }],
-    sections: [], note: "Composition reprise du site ANMB consulté le 3 septembre 2026. Les fonctions et mandats doivent être confirmés avant le lancement officiel.",
+    sections: [], note: "Composition reprise du site ANMB consulté le 4 septembre 2026. Les fonctions et mandats doivent être confirmés avant le lancement officiel.",
   },
   partners: {
     eyebrow: "Association · Réseau", title: "Partenaires et organismes de référence.", intro: "Les partenaires professionnels de l’ANMB sont présentés séparément des institutions qui protègent, certifient, documentent ou font rayonner le produit.",

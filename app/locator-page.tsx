@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   BriefcaseBusiness,
@@ -21,9 +22,7 @@ import {
   RegionKey,
   SaleLocation,
 } from "./locations";
-import { Lang } from "./content";
-import { routes } from "./content";
-import Link from "next/link";
+import { Lang, routes } from "./content";
 
 const assetPath = (path: string) => `${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}${path}`;
 
