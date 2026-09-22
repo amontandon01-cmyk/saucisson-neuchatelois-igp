@@ -1,80 +1,88 @@
-# Saucisson neuchâtelois IGP
+# Les deux IGP neuchâteloises
 
-Site bilingue du Saucisson neuchâtelois IGP et de l’ANMB.
+Site officiel bilingue de référence pour le **Saucisson neuchâtelois IGP** et la **Saucisse neuchâteloise IGP**. L’ANMB est présentée comme groupement officiel des deux dénominations ; la certification indépendante reste attribuée à l’OIC.
 
-## Objectifs
+Le site est une exportation statique Next.js, sans base de données, service d’analyse, carte embarquée ni dépendance de contenu à l’exécution.
 
-- expliquer clairement le produit et la valeur de l’IGP ;
-- donner une méthode de cuisson fiable et des idées de recettes ;
-- faire vivre la torrée sans négliger les règles de sécurité ;
-- distinguer l’adhésion ANMB, les fabricants certifiés IGP et les points de vente ;
-- proposer une entrée distincte pour le commerce, la gastronomie et les médias ;
-- atteindre la Suisse alémanique avec de vraies pages allemandes et des URL propres.
-
-## Architecture publique
-
-| Français | Deutsch | Rôle |
-| --- | --- | --- |
-| `/` | `/de` | Accueil et orientation |
-| `/le-produit` | `/de/das-produkt` | Origine, fabrication, IGP |
-| `/cuisson` | `/de/zubereitung` | Mode d’emploi |
-| `/recettes` | `/de/rezepte` | Inspiration culinaire |
-| `/torree` | `/de/torree` | Tradition et sécurité |
-| `/ou-acheter` | `/de/verkaufsstellen` | Annuaire validé |
-| `/professionnels` | `/de/fachhandel` | Commerce, gastronomie, presse |
-| `/anmb` | `/de/anmb` | Association professionnelle |
-| `/anmb/membres` | `/de/anmb/mitglieder` | Adhésion et distinction des statuts |
-| `/anmb/comite` | `/de/anmb/vorstand` | Comité et gouvernance |
-| `/anmb/reseau` | `/de/anmb/netzwerk` | Réseau et organismes de référence |
-| `/protection-des-donnees` | `/de/datenschutz` | Données, hébergement et liens externes |
-
-## Développement et publication GitHub Pages
+## Démarrer
 
 Prérequis : Node.js 22.13 ou plus récent.
 
 ```bash
-npm run install:ci
+npm ci
 npm run dev
 ```
 
-Contrôles avant publication :
+Vérification complète :
 
 ```bash
-npm run lint
-npm test
+npm run check
 ```
 
-Chaque envoi sur la branche `main` déclenche le workflow `.github/workflows/deploy-pages.yml`. Une fois GitHub Pages activé avec la source **GitHub Actions**, le site est publié à l’adresse :
+`npm run check` contrôle le code, reconstruit successivement la production et la préproduction, puis vérifie les routes, les deux langues, les noms protégés, les certificats OIC, les liens internes, les métadonnées, les données structurées et les garde-fous d’indexation.
 
-`https://amontandon01-cmyk.github.io/saucisson-neuchatelois-igp/`
+## Architecture éditoriale
 
-## Mise à jour des contenus
+- `content/site.ts` : routes, métadonnées et textes de pages transversales ;
+- `data/products.ts` : identité des deux produits et faits communs ;
+- `data/manufacturers.ts` : fabricants certifiés, certificats et points de vente liés ;
+- `data/association.ts` : ANMB et comité publié ;
+- `data/recipes.ts` : idées externes attribuées et futur modèle de recette hébergée ;
+- `data/news.ts` et `data/events.ts` : actualités sourcées et agenda ;
+- `data/sources.ts` : URLs primaires centralisées ;
+- `components/` : composants par domaine ;
+- `app/(fr)` et `app/(de)` : arbres de routes avec vrais attributs `lang` ;
+- `docs/` : preuves, droits médias et liste de validation avant lancement.
 
-- Les textes et routes se trouvent dans `app/content.ts`.
-- Les fabricants certifiés et points de vente se trouvent dans `app/locations.ts`.
-- Le répertoire de recettes et ses sources se trouvent dans `app/recipes-page.tsx`.
-- La structure des pages se trouve dans `app/site.tsx`.
-- L’identité visuelle et l’affichage mobile se trouvent dans `app/globals.css`.
-- Les ressources visuelles se trouvent dans `public/`.
+Les deux noms protégés ne sont jamais traduits :
 
-Avant la publication officielle, l’ANMB doit valider la liste des fabricants et revendeurs, la fonction exacte du référent IGP, les coordonnées de contact, les traductions allemandes et tout visuel photographique officiel.
+- Saucisson neuchâtelois IGP
+- Saucisse neuchâteloise IGP
 
-## Sources éditoriales principales
+## Routes principales
 
-- [Patrimoine culinaire suisse](https://www.patrimoineculinaire.ch/Produit/Saucisson-neuchatelois-IGP-saucisse-neuchateloise-IGP/29)
-- [AOP-IGP Suisse](https://www.aop-igp.ch/fr/au-sujet-des-aop-igp/index.php?id=303&L=2)
-- [Cahier des charges du Saucisson neuchâtelois IGP](https://www.aop-igp.ch/fileadmin/Dokumente/kampagne2025/Pflichtenhefte/SNE/Pflichtenheft%20FR%20Saucisson%20neuchatelois%20IGP.pdf)
-- [Contrôles et certification des AOP-IGP](https://www.aop-igp.ch/fr/au-sujet-des-aop-igp/aop-igp-en-suisse/controles-et-certification)
-- [Galerie officielle du Saucisson neuchâtelois IGP](https://www.aop-igp.ch/fr/saucisson-neuchatelois-igp/images-saucisson-neuchatelois-igp)
-- [Première Sélection du Saucisson neuchâtelois IGP 2026](https://cnci.ch/premiere-selection-du-saucisson-neuchatelois-igp)
+| Français | Deutsch |
+| --- | --- |
+| `/` | `/de` |
+| `/le-produit` | `/de/die-zwei-igp` |
+| `/saucisson-neuchatelois-igp` | `/de/saucisson-neuchatelois-igp` |
+| `/saucisse-neuchateloise-igp` | `/de/saucisse-neuchateloise-igp` |
+| `/cuisson` | `/de/zubereitung` |
+| `/recettes` | `/de/rezepte` |
+| `/torree` | `/de/torree` |
+| `/ou-acheter` | `/de/verkaufsstellen` |
+| `/fabricants/[slug]` | `/de/hersteller/[slug]` |
+| `/professionnels` | `/de/fachleute` |
+| `/actualites` | `/de/aktuell` |
+| `/anmb/*` | `/de/anmb/*` |
 
-Le visuel d’ambiance de la torrée est une photographie réelle de feu en forêt par [Rasmus sur Unsplash](https://unsplash.com/photos/campfire-burning-with-smoke-in-a-forest-setting-Z38mI0BC8g4), utilisée selon la [licence Unsplash](https://unsplash.com/license). Il ne présente pas une torrée documentaire et devra idéalement être remplacé par une photographie neuchâteloise dont l’ANMB possède les droits.
+## Publication GitHub Pages
 
-Les photographies du produit et du territoire proviennent de la galerie de l’Association suisse des AOP-IGP. Les fichiers HD et le droit de republication doivent être confirmés avant le lancement officiel. Les boutons Google reposent sur les URL universelles Google Maps sans clé API ; aucune carte ni fiche Google n’est intégrée dans la page.
+Un push ne publie jamais le site.
 
-## Identité officielle
+- `validate.yml` vérifie chaque branche et pull request ;
+- `deploy-preprod.yml` publie manuellement le commit courant de `main` sous `/preprod/`, en conservant la production courante ;
+- `deploy-production.yml` refuse automatiquement toute version qui ne correspond pas à celle déjà servie en préproduction. L’utilisateur donne simplement son accord dans la conversation ; il ne saisit ni SHA ni confirmation technique.
 
-- `public/logo-igp-officiel.png` : couleurs du logo IGP officiel et masque de transparence dérivé de la version vectorielle fournie sur la [page Corporate Design de l’Association suisse des AOP-IGP](https://www.aop-igp.ch/fr/a-notre-sujet/communication-et-rp/corporate-design). Le blanc des lettres et de la croix suisse est conservé ; seul le pourtour est transparent.
-- `public/logo-anmb-boucherie.png` et `public/logo-anmb-signature.png` : versions PNG des fichiers utilisés par le [site officiel de l’ANMB](https://www.boucheries-neuchatel.ch/), pour assurer un affichage fiable sur GitHub Pages. Le logo circulaire reste intact et repose sur un disque vert foncé cerclé d’or afin que son lettrage blanc demeure lisible sur tous les fonds.
+| Environnement | URL | Indexation |
+| --- | --- | --- |
+| Production | `https://amontandon01-cmyk.github.io/saucisson-neuchatelois-igp/` | autorisée |
+| Préproduction | `https://amontandon01-cmyk.github.io/saucisson-neuchatelois-igp/preprod/` | `noindex, nofollow` sur chaque page |
 
-Ces fichiers sont conservés sans redessin. Leur utilisation publique définitive reste soumise aux droits et validations des organisations concernées.
+La procédure complète, les contrôles automatiques de version et le retour arrière sont documentés dans `docs/DEPLOYMENT.md`.
+
+```bash
+npm test
+npm run test:preprod
+```
+
+## Règles de contribution
+
+1. Ne jamais traduire ni simplifier les deux dénominations protégées.
+2. Ajouter toute affirmation sensible dans `data/` avec sa source et sa date de vérification.
+3. Ne pas assimiler un point de vente à un fabricant certifié.
+4. Ne publier une recette complète qu’après validation culinaire et confirmation des droits d’image.
+5. Ne publier un événement qu’avec une source officielle datée.
+6. Vérifier `docs/LAUNCH-CHECKLIST.md` avant une mise en production institutionnelle.
+
+Les sources de référence et le statut précis des médias sont documentés dans `docs/SOURCES.md` et `docs/MEDIA-RIGHTS.md`.

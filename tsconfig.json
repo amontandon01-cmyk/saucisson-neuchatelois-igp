@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "target": "ES2017",
+    "target": "ES2022",
     "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
+    "allowJs": false,
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
@@ -26,6 +26,11 @@
     "next-env.d.ts",
     "app/**/*.ts",
     "app/**/*.tsx",
+    "components/**/*.ts",
+    "components/**/*.tsx",
+    "content/**/*.ts",
+    "data/**/*.ts",
+    "lib/**/*.ts",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],
