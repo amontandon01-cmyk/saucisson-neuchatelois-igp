@@ -6,14 +6,16 @@ Le dépôt suit le même fonctionnement prudent que les autres sites d’Arthur 
 
 1. travail sur une branche dédiée ;
 2. contrôles automatiques ;
-3. intégration du candidat dans `main`, sans publication automatique ;
-4. publication manuelle en préproduction ;
+3. intégration du candidat dans `main`, sans publication déclenchée par un push de code ordinaire ;
+4. demande interne explicite et publication en préproduction ;
 5. validation humaine du contenu, du mobile et de l’ordinateur ;
-6. accord conversationnel de l’utilisateur — « validé, mets en production » — puis publication manuelle de la même version.
+6. accord conversationnel de l’utilisateur — « validé, mets en production » — puis demande interne explicite et publication de la même version.
 
 `main` représente la source candidate. Il ne représente pas automatiquement la version publique.
 
-Les identifiants de commit et les manipulations GitHub restent à la charge de l’opérateur technique. L’utilisateur ne saisit aucun SHA, aucun mot de confirmation et ne lance aucun workflow.
+Les identifiants de commit et les manipulations GitHub restent à la charge de l’assistant ou de l’opérateur technique. L’utilisateur ne saisit aucun SHA, aucun mot de confirmation et ne lance aucun workflow.
+
+Les fichiers `deploy/preprod-request.txt` et `deploy/production-request.txt` servent uniquement de boutons techniques versionnés. Un push de contenu normal ne publie rien. `workflow_dispatch` reste disponible comme solution de secours pour l’opérateur.
 
 ## Particularité de GitHub Pages
 
@@ -50,7 +52,7 @@ npm run check
 
 Prérequis : le candidat à examiner est le commit courant de `main`. Sa présence dans `main` ne modifie pas le site public.
 
-L’opérateur technique ouvre **Actions → Déployer en préproduction**, choisit `main`, lance le workflow et attend les vérifications après publication. Il transmet ensuite l’URL de préproduction à l’utilisateur.
+L’assistant met à jour `deploy/preprod-request.txt`. Cette demande explicite lance **Déployer en préproduction** depuis `main`. Il attend les vérifications après publication, puis transmet l’URL de préproduction à l’utilisateur.
 
 L’utilisateur contrôle au minimum :
 
@@ -67,12 +69,13 @@ La première publication utilise `deploy/production-baseline.txt` pour identifie
 
 ## Déployer en production
 
-Après contrôle de la préproduction, l’utilisateur dit simplement « validé, mets en production ». L’opérateur technique lance alors **Déployer en production** sur `main` ; le formulaire ne demande aucune saisie.
+Après contrôle de la préproduction, l’utilisateur dit simplement « validé, mets en production ». L’assistant inscrit alors automatiquement la version validée dans `deploy/production-request.txt`, ce qui lance **Déployer en production** depuis `main`.
 
 Le workflow refuse la publication si :
 
 - la branche n’est pas `main` ;
-- le commit courant n’est pas exactement celui actuellement servi en préproduction ;
+- la version demandée n’est pas exactement celle actuellement servie en préproduction ;
+- le commit de demande contient une autre modification que le fichier de contrôle ;
 - les contrôles ou le build échouent.
 
 Après publication, le workflow relit les deux `release.json`, les directives d’indexation et les pages d’accueil réellement servies.
@@ -94,4 +97,4 @@ Le retour arrière ne contourne donc jamais la préproduction.
 
 - production publique de référence : `7de86e5ecba06799236c9490f48669be06d074c9` ;
 - refonte : branche `feat/two-igp-reference-site` ;
-- aucune publication automatique sur push après intégration de ces workflows.
+- aucune publication sur un push de code ordinaire après intégration de ces workflows.

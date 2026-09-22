@@ -58,11 +58,11 @@ Les deux noms protégés ne sont jamais traduits :
 
 ## Publication GitHub Pages
 
-Un push ne publie jamais le site.
+Un push de code ordinaire ne publie jamais le site. Les publications partent d’une demande interne explicite que l’assistant gère en arrière-plan.
 
 - `validate.yml` vérifie chaque branche et pull request ;
-- `deploy-preprod.yml` publie manuellement le commit courant de `main` sous `/preprod/`, en conservant la production courante ;
-- `deploy-production.yml` refuse automatiquement toute version qui ne correspond pas à celle déjà servie en préproduction. L’utilisateur donne simplement son accord dans la conversation ; il ne saisit ni SHA ni confirmation technique.
+- `deploy-preprod.yml` publie le candidat courant de `main` sous `/preprod/` après mise à jour du fichier de demande interne, en conservant la production courante ;
+- `deploy-production.yml` lit la version validée depuis sa demande interne et refuse automatiquement tout écart avec la préproduction. L’utilisateur donne simplement son accord dans la conversation ; il ne saisit ni SHA ni confirmation technique.
 
 | Environnement | URL | Indexation |
 | --- | --- | --- |

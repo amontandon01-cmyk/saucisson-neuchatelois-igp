@@ -2,6 +2,11 @@ name: Déployer en préproduction
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - deploy/preprod-request.txt
 
 permissions:
   contents: read
@@ -25,6 +30,7 @@ jobs:
       - name: Récupérer le commit candidat exact
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
+          fetch-depth: 0
           persist-credentials: false
       - name: Préparer Node.js
         uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
