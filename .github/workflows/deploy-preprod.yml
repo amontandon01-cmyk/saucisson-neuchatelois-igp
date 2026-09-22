@@ -96,6 +96,6 @@ jobs:
             "${{ steps.production.outputs.sha }}"
       - name: Résumer la version à valider
         run: |
-          printf 'Préproduction à valider : %s\n\nSHA exact : `%s`\n' \
+          printf 'Préproduction à valider : %s\n\nVersion technique : `%s`\n' \
             'https://amontandon01-cmyk.github.io/saucisson-neuchatelois-igp/preprod/' \
             "$GITHUB_SHA" >> "$GITHUB_STEP_SUMMARY"
