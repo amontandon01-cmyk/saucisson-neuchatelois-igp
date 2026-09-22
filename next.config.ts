@@ -6,6 +6,11 @@ const nextConfig: NextConfig = {
   output: "export",
   trailingSlash: true,
   basePath,
+  reactStrictMode: true,
+  poweredByHeader: false,
+  experimental: {
+    globalNotFound: true,
+  },
   images: {
     unoptimized: true,
   },

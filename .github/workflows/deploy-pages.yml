@@ -19,6 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NEXT_PUBLIC_BASE_PATH: /saucisson-neuchatelois-igp
+      NEXT_PUBLIC_SITE_URL: https://amontandon01-cmyk.github.io
     steps:
       - name: Checkout
         uses: actions/checkout@v6
