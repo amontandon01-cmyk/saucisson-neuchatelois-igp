@@ -14,11 +14,13 @@ test("never deploys production or preproduction automatically", async () => {
   }
 });
 
-test("requires explicit production approval and the validated SHA", async () => {
+test("publishes only the version already served in preproduction", async () => {
   const workflow = await readFile(`${workflowRoot}/deploy-production.yml`, "utf8");
-  assert.match(workflow, /test "\$DEPLOY_CONFIRMATION" = PRODUCTION/);
-  assert.match(workflow, /test "\$VALIDATED_SHA" = "\$GITHUB_SHA"/);
-  assert.match(workflow, /Prouver que ce SHA est actuellement en préproduction/);
+  assert.doesNotMatch(workflow, /validated_sha:|confirmation:/);
+  assert.doesNotMatch(workflow, /DEPLOY_CONFIRMATION|VALIDATED_SHA/);
+  assert.match(workflow, /test "\$GITHUB_REF_NAME" = main/);
+  assert.match(workflow, /Prouver que cette version est actuellement en préproduction/);
+  assert.match(workflow, /verify-live\.mjs \\\s+preprod \\\s+"\$GITHUB_SHA"/);
   assert.match(workflow, /verify-live\.mjs production "\$GITHUB_SHA" "\$GITHUB_SHA"/);
 });
 

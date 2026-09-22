@@ -62,14 +62,14 @@ Un push ne publie jamais le site.
 
 - `validate.yml` vérifie chaque branche et pull request ;
 - `deploy-preprod.yml` publie manuellement le commit courant de `main` sous `/preprod/`, en conservant la production courante ;
-- `deploy-production.yml` exige la confirmation `PRODUCTION` et le SHA exact déjà vérifié en préproduction.
+- `deploy-production.yml` refuse automatiquement toute version qui ne correspond pas à celle déjà servie en préproduction. L’utilisateur donne simplement son accord dans la conversation ; il ne saisit ni SHA ni confirmation technique.
 
 | Environnement | URL | Indexation |
 | --- | --- | --- |
 | Production | `https://amontandon01-cmyk.github.io/saucisson-neuchatelois-igp/` | autorisée |
 | Préproduction | `https://amontandon01-cmyk.github.io/saucisson-neuchatelois-igp/preprod/` | `noindex, nofollow` sur chaque page |
 
-La procédure complète, les vérifications de SHA et le retour arrière sont documentés dans `docs/DEPLOYMENT.md`.
+La procédure complète, les contrôles automatiques de version et le retour arrière sont documentés dans `docs/DEPLOYMENT.md`.
 
 ```bash
 npm test

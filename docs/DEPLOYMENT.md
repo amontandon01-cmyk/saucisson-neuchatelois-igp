@@ -9,9 +9,11 @@ Le dépôt suit le même fonctionnement prudent que les autres sites d’Arthur 
 3. intégration du candidat dans `main`, sans publication automatique ;
 4. publication manuelle en préproduction ;
 5. validation humaine du contenu, du mobile et de l’ordinateur ;
-6. publication manuelle en production du **même SHA complet**.
+6. accord conversationnel de l’utilisateur — « validé, mets en production » — puis publication manuelle de la même version.
 
 `main` représente la source candidate. Il ne représente pas automatiquement la version publique.
+
+Les identifiants de commit et les manipulations GitHub restent à la charge de l’opérateur technique. L’utilisateur ne saisit aucun SHA, aucun mot de confirmation et ne lance aucun workflow.
 
 ## Particularité de GitHub Pages
 
@@ -48,36 +50,29 @@ npm run check
 
 Prérequis : le candidat à examiner est le commit courant de `main`. Sa présence dans `main` ne modifie pas le site public.
 
-1. Ouvrir **Actions → Déployer en préproduction**.
-2. Choisir la branche `main`.
-3. Lancer le workflow.
-4. Attendre les vérifications après publication.
-5. Ouvrir l’URL de préproduction et contrôler au minimum :
+L’opérateur technique ouvre **Actions → Déployer en préproduction**, choisit `main`, lance le workflow et attend les vérifications après publication. Il transmet ensuite l’URL de préproduction à l’utilisateur.
+
+L’utilisateur contrôle au minimum :
+
    - accueil français et allemand ;
    - pages des deux produits ;
    - annuaire et profils ;
    - navigation clavier et menu mobile ;
    - affichage téléphone, tablette et ordinateur ;
    - liens externes et mentions de source.
-6. Noter le SHA complet affiché dans le résumé et dans `/preprod/release.json`.
+
+Le workflow inscrit automatiquement l’identifiant technique dans `/preprod/release.json`. Il sert à garantir la continuité entre préproduction et production, sans intervention de l’utilisateur.
 
 La première publication utilise `deploy/production-baseline.txt` pour identifier la production historique. Dès que le nouveau système a publié un `release.json` en production, ce manifeste devient automatiquement la référence.
 
 ## Déployer en production
 
-Lancer **Déployer en production** sur `main` uniquement après accord explicite sur la préproduction.
-
-Le formulaire exige :
-
-- `confirmation` : saisir exactement `PRODUCTION` ;
-- `validated_sha` : coller le SHA complet validé.
+Après contrôle de la préproduction, l’utilisateur dit simplement « validé, mets en production ». L’opérateur technique lance alors **Déployer en production** sur `main` ; le formulaire ne demande aucune saisie.
 
 Le workflow refuse la publication si :
 
 - la branche n’est pas `main` ;
-- la confirmation diffère ;
-- le SHA saisi n’est pas le commit courant ;
-- ce SHA n’est pas celui actuellement servi en préproduction ;
+- le commit courant n’est pas exactement celui actuellement servi en préproduction ;
 - les contrôles ou le build échouent.
 
 Après publication, le workflow relit les deux `release.json`, les directives d’indexation et les pages d’accueil réellement servies.
@@ -86,12 +81,12 @@ Après publication, le workflow relit les deux `release.json`, les directives d�
 
 Voie normale :
 
-1. identifier le changement fautif et le dernier SHA stable ;
+1. identifier le changement fautif et la dernière version stable ;
 2. créer un `git revert` sur une branche dédiée — jamais de `reset --hard` ni de push forcé sur `main` ;
 3. intégrer le revert dans `main` ;
 4. republier en préproduction ;
 5. valider ;
-6. republier en production avec le nouveau SHA du revert.
+6. republier en production ; le contrôle de version du revert reste automatique.
 
 Le retour arrière ne contourne donc jamais la préproduction.
 

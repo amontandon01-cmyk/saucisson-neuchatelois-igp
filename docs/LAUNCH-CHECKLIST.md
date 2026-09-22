@@ -43,7 +43,7 @@ La branche peut être compilée et testée sans ces validations. Elles restent n
 - [ ] Mesurer Core Web Vitals et corriger toute régression significative.
 - [ ] Vérifier la politique de confidentialité par rapport à l’hébergeur et aux services réellement activés.
 - [ ] Exécuter `npm ci` et `npm run check` sur le commit de lancement.
-- [ ] Publier ce commit en préproduction et faire valider son SHA complet avant toute production.
+- [ ] Publier la version en préproduction et faire valider son rendu avant toute production ; le workflow garantit automatiquement que la même version sera promue.
 
 ## Exploitation
 
