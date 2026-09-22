@@ -16,11 +16,10 @@ npm run dev
 Vérification complète :
 
 ```bash
-npm run lint
-npm test
+npm run check
 ```
 
-`npm test` reconstruit le site, puis contrôle les routes, les deux langues, les noms protégés, les certificats OIC, les liens internes, les métadonnées et les données structurées.
+`npm run check` contrôle le code, reconstruit successivement la production et la préproduction, puis vérifie les routes, les deux langues, les noms protégés, les certificats OIC, les liens internes, les métadonnées, les données structurées et les garde-fous d’indexation.
 
 ## Architecture éditoriale
 
@@ -59,21 +58,22 @@ Les deux noms protégés ne sont jamais traduits :
 
 ## Publication GitHub Pages
 
-Le workflow `.github/workflows/deploy-pages.yml` publie uniquement après un envoi sur `main` ou un déclenchement manuel. Il configure :
+Un push ne publie jamais le site.
 
-```text
-NEXT_PUBLIC_BASE_PATH=/saucisson-neuchatelois-igp
-NEXT_PUBLIC_SITE_URL=https://amontandon01-cmyk.github.io
-```
+- `validate.yml` vérifie chaque branche et pull request ;
+- `deploy-preprod.yml` publie manuellement le commit courant de `main` sous `/preprod/`, en conservant la production courante ;
+- `deploy-production.yml` exige la confirmation `PRODUCTION` et le SHA exact déjà vérifié en préproduction.
 
-URL cible : `https://amontandon01-cmyk.github.io/saucisson-neuchatelois-igp/`.
+| Environnement | URL | Indexation |
+| --- | --- | --- |
+| Production | `https://amontandon01-cmyk.github.io/saucisson-neuchatelois-igp/` | autorisée |
+| Préproduction | `https://amontandon01-cmyk.github.io/saucisson-neuchatelois-igp/preprod/` | `noindex, nofollow` sur chaque page |
 
-Pour tester exactement la version GitHub Pages en local :
+La procédure complète, les vérifications de SHA et le retour arrière sont documentés dans `docs/DEPLOYMENT.md`.
 
 ```bash
-NEXT_PUBLIC_BASE_PATH=/saucisson-neuchatelois-igp \
-NEXT_PUBLIC_SITE_URL=https://amontandon01-cmyk.github.io \
 npm test
+npm run test:preprod
 ```
 
 ## Règles de contribution

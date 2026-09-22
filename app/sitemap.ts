@@ -3,11 +3,13 @@ import { routes, type Lang, type RouteKey } from "@/content/site";
 import { manufacturers } from "@/data/manufacturers";
 import { newsItems } from "@/data/news";
 import { manufacturerRoute, newsArticleRoute } from "@/lib/routes";
-import { absoluteUrl } from "@/lib/site-config";
+import { absoluteUrl, isPreproduction } from "@/lib/site-config";
 
 export const dynamic = "force-static";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  if (isPreproduction) return [];
+
   const updated = new Date("2026-09-22T00:00:00Z");
   const entries: MetadataRoute.Sitemap = [];
   const keys = Object.keys(routes.fr) as RouteKey[];

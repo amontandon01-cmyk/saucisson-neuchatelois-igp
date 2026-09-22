@@ -42,7 +42,8 @@ La branche peut être compilée et testée sans ces validations. Elles restent n
 - [ ] Tester le menu mobile sur iOS Safari et Android Chrome.
 - [ ] Mesurer Core Web Vitals et corriger toute régression significative.
 - [ ] Vérifier la politique de confidentialité par rapport à l’hébergeur et aux services réellement activés.
-- [ ] Exécuter `npm ci`, `npm run lint` et `npm test` sur le commit de lancement.
+- [ ] Exécuter `npm ci` et `npm run check` sur le commit de lancement.
+- [ ] Publier ce commit en préproduction et faire valider son SHA complet avant toute production.
 
 ## Exploitation
 

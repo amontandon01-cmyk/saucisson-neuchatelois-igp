@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
 import { createElement } from "react";
 import { pageMeta, routes, type Lang, type RouteKey } from "@/content/site";
-import { absoluteUrl, assetPath, siteName, siteOrigin } from "./site-config";
+import {
+  absoluteUrl,
+  assetPath,
+  isPreproduction,
+  siteName,
+  siteOrigin,
+} from "./site-config";
 
 const socialImage = "/aop-saucisson-planche.webp";
 
@@ -19,7 +25,9 @@ export function rootMetadata(lang: Lang): Metadata {
       shortcut: assetPath("/favicon.png"),
       apple: assetPath("/favicon.png"),
     },
-    robots: { index: true, follow: true },
+    robots: isPreproduction
+      ? { index: false, follow: false, noarchive: true, nocache: true }
+      : { index: true, follow: true },
   };
 }
 

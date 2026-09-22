@@ -4,6 +4,7 @@ import { extname, join } from "node:path";
 import test from "node:test";
 
 const basePath = (process.env.NEXT_PUBLIC_BASE_PATH ?? "").replace(/\/$/, "");
+const deploymentEnvironment = process.env.NEXT_PUBLIC_DEPLOY_ENV ?? "development";
 const expectedStaticRoutes = [
   "le-produit",
   "saucisson-neuchatelois-igp",
@@ -57,8 +58,8 @@ test("exports the complete bilingual route structure", async () => {
     "out/actualites/premiere-selection-2026/index.html",
     "out/de/aktuell/erste-selektion-2026/index.html",
     "out/robots.txt",
-    "out/sitemap.xml",
   );
+  if (deploymentEnvironment !== "preprod") files.push("out/sitemap.xml");
   await Promise.all(files.map((file) => access(file)));
 });
 
@@ -184,17 +185,22 @@ test("publishes the verified ANMB committee without an invented coordinator", as
 test("emits canonical, hreflang, social, robots and sitemap metadata", async () => {
   const french = await readFile("out/le-produit/index.html", "utf8");
   const german = await readFile("out/de/die-zwei-igp/index.html", "utf8");
-  const sitemap = await readFile("out/sitemap.xml", "utf8");
   const robots = await readFile("out/robots.txt", "utf8");
   assert.match(french, /rel="canonical"/);
   assert.match(french, /hrefLang="de"/);
   assert.match(french, /property="og:locale" content="fr_CH"/);
   assert.match(german, /hrefLang="fr"/);
   assert.match(german, /property="og:locale" content="de_CH"/);
-  assert.match(sitemap, /saucisson-neuchatelois-igp/);
-  assert.match(sitemap, /hreflang="de"/);
-  assert.match(robots, /Allow: \/$/m);
-  assert.match(robots, /Sitemap:/);
+  if (deploymentEnvironment === "preprod") {
+    assert.match(robots, /Disallow: \/$/m);
+    assert.doesNotMatch(robots, /Sitemap:/);
+  } else {
+    const sitemap = await readFile("out/sitemap.xml", "utf8");
+    assert.match(sitemap, /saucisson-neuchatelois-igp/);
+    assert.match(sitemap, /hreflang="de"/);
+    assert.match(robots, /Allow: \/$/m);
+    assert.match(robots, /Sitemap:/);
+  }
 });
 
 test("uses the configured GitHub Pages base path for routes, assets and metadata", async () => {

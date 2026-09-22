@@ -9,9 +9,12 @@
     "dev": "next dev",
     "prebuild": "node scripts/clean-output.mjs",
     "build": "next build",
+    "postbuild": "node scripts/finalize-export.mjs",
     "start": "next start",
-    "test": "npm run build && node --test tests/static-export.test.mjs",
-    "lint": "eslint . --ignore-pattern .next --ignore-pattern out"
+    "test": "node scripts/check-environment.mjs production",
+    "test:preprod": "node scripts/check-environment.mjs preprod",
+    "lint": "eslint . --ignore-pattern .next --ignore-pattern out --ignore-pattern .deploy",
+    "check": "npm run lint && npm test && npm run test:preprod"
   },
   "dependencies": {
     "lucide-react": "^1.31.0",
